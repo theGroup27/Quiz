@@ -1,3 +1,3 @@
 Final Project
 
-by humans
+by humans.
