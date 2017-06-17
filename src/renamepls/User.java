@@ -6,11 +6,13 @@ import java.security.*;
  * Created by anophoo on 6/12/17.
  */
 public class User {
+    private String id;
     private byte[] passBytes;
     private String userName;
     private Password hashing = new Password();
 
-    public User(String userName, String password) {
+    public User(String id, String userName, String password) {
+        this.id = id;
         this.userName = userName;
         String hash = hashing.getHashValue(password);
         this.passBytes = hashing.hexToArray(hash);
