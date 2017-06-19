@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Homepage</title>
   </head>
   <body>
-  $END$
+  <h1>Homepage Rules</h1>
+  <p>Announcement from administrators</p>
+  <p>Popular Quizes</p>
+  <p>Recently Created Quizes</p>
+  <p>Log in</p>
   </body>
 </html>
