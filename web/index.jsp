@@ -15,6 +15,10 @@
   <p>Announcement from administrators</p>
   <p>Popular Quizes</p>
   <p>Recently Created Quizes</p>
-  <p><a href="UserLogin.jsp">log in</a></p>
+  <p>
+    <a href="UserLogin.jsp">log in</a>
+    or
+    <a href="UserRegister.jsp">Register</a>
+  </p>
   </body>
 </html>

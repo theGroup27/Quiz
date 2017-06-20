@@ -1,11 +1,13 @@
-package renamepls;
+package usersystem;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 
 /**
  * Created by mariam on 17/06/17.
  */
+@WebServlet("/LoginServlet")
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
             throws javax.servlet.ServletException, IOException {
@@ -34,7 +36,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
                 rd = request.getRequestDispatcher("Error.jsp");
             }
         } else {
-            rd = request.getRequestDispatcher("Error.jsp");
+            rd = request.getRequestDispatcher("InappropriateInput.jsp");
         }
         rd.forward(request, response);
     }
