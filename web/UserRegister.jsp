@@ -17,10 +17,10 @@
         <input type="text" name="username" placeholder="username">
     </p>
     <p>
-        <input type="text" name="password" placeholder="password">
+        <input type="password" name="password" placeholder="password">
     </p>
     <p>
-        <input type="text" name="verify" placeholder="verify password">
+        <input type="password" name="verify" placeholder="verify password">
     </p>
     <p>
         <input type="submit" value="Sign Up">

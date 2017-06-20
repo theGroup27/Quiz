@@ -23,12 +23,12 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
         if (passInput.equals(passVerify)) {
             if (usrMng.isAppropriatePassword(passInput) && usrMng.isAppropriateUsername(nameInput)) {
                 rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
-//                if(!usrMng.usernameExists(nameInput)) {
-//                    //add to database
-//                    //rd = request.getRequestDispatcher("UserTemp.jsp/id="+nameInput);
-//                } else {
-//                    rd = request.getRequestDispatcher("Error.jsp");
-//                }
+                if(!usrMng.usernameExists(nameInput)) {
+                    //add to database
+                    //rd = request.getRequestDispatcher("UserTemp.jsp/id="+nameInput);
+                } else {
+                    rd = request.getRequestDispatcher("Error.jsp");
+                }
             } else {
                 rd = request.getRequestDispatcher("InappropriateInput.jsp");
             }
