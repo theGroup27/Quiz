@@ -21,8 +21,8 @@
     </p>
     <p>
         <input type="submit" value="Login">
-        <input type="submit" value="Register">
     </p>
+    <p><a href="www.google.com">register</a></p>
 </form>
 </body>
 </html>
