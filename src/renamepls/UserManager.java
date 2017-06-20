@@ -4,23 +4,39 @@ package renamepls;
  * Created by mariam on 14/06/17.
  */
 public class UserManager {
-    public boolean isPassowrd(String username, String password) {
+
+    public UserManager() {}
+
+    public boolean isPassowrd(User user, String password) {
         Password hashing = new Password();
         String passHash = hashing.getHashValue(password);
-        if (passHash.equals(userByUsername(username).getPassword()))
+        String passUser = user.getPassword();
+        if (passUser.equals(passHash))
             return true;
         return false;
     }
 
-    public User userByUsername(String username) {
-        return null;
-    }
 
     public boolean usernameExists(String username) {
         return false;
     }
 
-    public boolean isAppropriateInput(String username, String password){
-        return false;
+    public boolean isAppropriatePassword(String password){
+        for (int i =0; i<password.length(); i++) {
+            if (!Character.isLetterOrDigit(password.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isAppropriateUsername(String username) {
+        for (int i =0; i<username.length(); i++) {
+            char c = username.charAt(i);
+            if (!Character.isLetterOrDigit(c) && c!='_' && c!='.') {
+                return false;
+            }
+        }
+        return true;
     }
 }
