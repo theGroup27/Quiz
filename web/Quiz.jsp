@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Create Quiz</title>
 </head>
 <body>
-
+<h1>Choose Quiz type wisely</h1>
+<h2>Random Questions</h2>
+<h2>Other</h2>
 </body>
 </html>
