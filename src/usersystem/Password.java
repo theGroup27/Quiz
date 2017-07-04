@@ -1,11 +1,14 @@
 package usersystem;
 
+import staticstuff.Hashing;
+
 import java.security.*;
 
 /**
  * Created by mariam on 14/06/17.
  */
 public class Password {
+
     public Password () {
 
     }
@@ -13,47 +16,38 @@ public class Password {
     My code
     Gets the hash value of given string using SHA algorithm
     */
-    public String getHashValue(String pass) {
+    public String getHashValue(String password, byte[] salt) {
+
         MessageDigest sh;
         try {
-            sh = MessageDigest.getInstance("SHA-1");
-            sh.update(pass.getBytes());
-            byte[] mdbytes = sh.digest();
-            return hexToString(mdbytes);
+            sh = MessageDigest.getInstance("SHA-256");
+            byte[] pass = password.getBytes();
+            byte[] both = attachTwoArrays(pass,salt);
+            sh.update(both);
+            byte[] hash = sh.digest();
+            return Hashing.hexToString(hash);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    /*assignment 4 provided code*/
-    /*
-    Given a byte[] array, produces a hex String,
-    such as "234a6f". with 2 chars for each byte in the array.
-    (provided code)
-    */
-    public String hexToString(byte[] bytes) {
-        StringBuffer buff = new StringBuffer();
-        for (int i=0; i<bytes.length; i++) {
-            int val = bytes[i];
-            val = val & 0xff;  // remove higher bits, sign
-            if (val<16) buff.append('0'); // leading 0
-            buff.append(Integer.toString(val, 16));
-        }
-        return buff.toString();
+
+    private byte[] attachTwoArrays(byte[] first, byte[] second) {
+        byte[] both = new byte[first.length+second.length];
+        System.arraycopy(first,0,both,0, first.length);
+        System.arraycopy(second,0,both,first.length, second.length);
+        return both;
     }
 
-    /*
-    Given a string of hex byte values such as "24a26f", creates
-    a byte[] array of those values, one byte value -128..127
-    for each 2 chars.
-    (provided code)
-    */
-    public byte[] hexToArray(String hex) {
-        byte[] result = new byte[hex.length()/2];
-        for (int i=0; i<hex.length(); i+=2) {
-            result[i/2] = (byte) Integer.parseInt(hex.substring(i, i+2), 16);
-        }
-        return result;
+    public byte[] generateSalt() {
+        //copied from oracle docs
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[20];
+        random.nextBytes(bytes);
+        //
+        return bytes;
     }
+
+
 }

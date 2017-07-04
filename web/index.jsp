@@ -13,8 +13,8 @@
   <body>
   <h1>Homepage Rules</h1>
   <p>Announcement from administrators</p>
-  <p>Popular Quizes</p>
-  <p>Recently Created Quizes</p>
+  <p>Popular Quizzes</p>
+  <p>Recently Created Quizzes</p>
   <p><a href="Quiz.jsp">Create Quiz</a></p>
   <p>
     <a href="UserLogin.jsp">log in</a>

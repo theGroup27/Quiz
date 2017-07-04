@@ -1,8 +1,15 @@
 package usersystem;
 
+import database.DBConnection;
+import database.MyDBInfo;
+import database.UserDAO;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.sql.*;
 
 /**
  * Created by mariam on 17/06/17.
@@ -11,27 +18,27 @@ import java.io.IOException;
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
             throws javax.servlet.ServletException, IOException {
-        UserManager usrMng = new UserManager();
+
         String nameInput = request.getParameter("username");
         String passInput = request.getParameter("password");
-        User user = null;
+
         RequestDispatcher rd;
-        String table = "Users";
-        String[] values = {"username"};
-        //DB.getByColumn(table,values);
-        /*
-            String str = "select ";
-            for (int i=0; i<values.length; i++) {
-                str += "x." + values[i]
-            }
-            str += " from " + table + " as x;"
-            PreparedStatement columnStatement = con.prepareStatement(str);
-            ResultSet rs = columnStatement .executeQuery();
-         */
+
+        UserManager usrMng = new UserManager();
+
+        DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
+        User user = null;
+        try {
+            user = db.getUserByUsername(nameInput);
+            System.out.println("#####~" + user.getUserName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         if (usrMng.isAppropriatePassword(passInput) && usrMng.isAppropriateUsername(nameInput)) {
-            if (usrMng.usernameExists(nameInput)
-                    && usrMng.isPassowrd(user,passInput)) {
-                rd = request.getRequestDispatcher("Index.jsp");
+            if (usrMng.usernameExists(nameInput) && user!=null
+                    && usrMng.isPassword(user,passInput)) {
+                rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");
             }

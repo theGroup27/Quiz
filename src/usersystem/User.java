@@ -1,27 +1,35 @@
 package usersystem;
 
+import staticstuff.Hashing;
+
 import java.util.*;
 
 public class User {
-    private String id;
+    private byte[] salt;
+    private int id;
     private byte[] passBytes;
     private List<String> achList = new ArrayList<String>();
     private List<User> friendList = new ArrayList<User>();
     private boolean isAdmin;
     private String userName;
-    private Password hashing = new Password();
+    private Password pass = new Password();
 
-    public User(String id, String username, String hash) {
+    public User(int id, String username, String passHash, byte[] salt) {
         this.id = id;
         this.userName = username;
-        //String hash = hashing.getHashValue(password);
-        this.passBytes = hashing.hexToArray(hash);
+        this.passBytes = Hashing.hexToArray(passHash);
+        this.salt = salt;
+
         //update database
     }
 
-    public String getPassword() {
-        String hash = hashing.hexToString(this.passBytes);
+    public String getPasswordString() {
+        String hash = Hashing.hexToString(this.passBytes);
         return hash;
+    }
+
+    public byte[] getPasswordBin() {
+        return passBytes;
     }
 
     public String getUserName() {
@@ -52,15 +60,9 @@ public class User {
         return isAdmin;
     }
 
-
-//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-
-    // User identifier can be changed
-    public void sendFriendRequest(User contact) {
-        // update database
+    public byte[] getSalt() {
+        return salt;
     }
 
-    public void respondToRequest(User contact) {
-        // respond
-    }
+
 }

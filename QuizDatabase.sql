@@ -2,10 +2,10 @@ use Quizzes;
 
 create table if not exists users (
 id int(11) not null auto_increment,
-username varchar(30) default null,
-/* hex to binary */
-user_password binary(20) default null,
-user_achievement enum('amateur','profilic','prodigious','quiz_machine','greatest','practice') default null,
+username varchar(30) not null,
+user_password varchar(64) not null,
+salt varchar(40) not null,
+achievement enum('amateur','profilic','prodigious','quiz_machine','greatest','practice') default null,
 is_admin boolean default false,
 unique key pass_uniq (user_password),
 unique key user_uniq (username),

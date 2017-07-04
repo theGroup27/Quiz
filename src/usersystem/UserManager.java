@@ -1,5 +1,9 @@
 package usersystem;
 
+import database.DBConnection;
+
+import java.sql.SQLException;
+
 /**
  * Created by mariam on 14/06/17.
  */
@@ -7,20 +11,29 @@ public class UserManager {
 
     public UserManager() {}
 
-    public boolean isPassowrd(User user, String password) {
-        Password hashing = new Password();
-        String passHash = hashing.getHashValue(password);
-        String passUser = user.getPassword();
-        if (passUser.equals(passHash))
+    public boolean isPassword(User user, String password) {
+        Password pass = new Password();
+        String passEntered = pass.getHashValue(password,user.getSalt());
+        String passUser = user.getPasswordString();
+        System.out.println(passEntered+ ",,,,,");
+        if (passUser.equals(passEntered))
             return true;
         return false;
     }
 
 
     public boolean usernameExists(String username) {
-        return false;
+        DBConnection db = new DBConnection();
+        try {
+            if (db.getUserByUsername(username) != null)
+                return true;
+            else return false;
+        } catch (SQLException e){
+            return false;
+        }
     }
 
+    //has to be letter or digit
     public boolean isAppropriatePassword(String password){
         for (int i =0; i<password.length(); i++) {
             if (!Character.isLetterOrDigit(password.charAt(i))) {
@@ -30,6 +43,7 @@ public class UserManager {
         return true;
     }
 
+    //contains letters digits or "_" and "."
     public boolean isAppropriateUsername(String username) {
         for (int i =0; i<username.length(); i++) {
             char c = username.charAt(i);
