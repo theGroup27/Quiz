@@ -89,7 +89,7 @@ public class DBConnection {
                 if (rs.next()) {
                     return getUserFromRes(rs);
                 } else {
-                    throw new IllegalArgumentException("Invalid username");
+                    return null;
                 }
             } catch (SQLException ex){
                 ex.printStackTrace();
