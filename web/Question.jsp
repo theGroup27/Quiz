@@ -9,37 +9,32 @@
 <html>
 <head>
     <title>Question</title>
+
 </head>
-<body>
+<body onLoad="defaultSettings()">
 <script language="javascript" type="text/javascript">
+    function hideAllQuestions() {
+        document.getElementById("question-response").style.visibility = "hidden";
+        document.getElementById("fill").style.visibility = "hidden";
+        document.getElementById("multi-answer").style.visibility = "hidden";
+        document.getElementById("multiple-choice").style.visibility = "hidden";
+        document.getElementById("picture").style.visibility = "hidden";
+        document.getElementById("matching").style.visibility = "hidden";
+    }
+
     function updateQuestion() {
-       // document.getElementById(elementId).style.visibility = "hidden";
         var questionType = document.getElementById("quest-type").value;
-        switch (questionType) {
-            case "question-response":
-                document.getElementById(questionType).style.visibility = "hidden";
-                break;
-            case "fill":
-                document.getElementById(questionType).style.visibility = "hidden";
-                break;
-            case "multi-answer":
-                document.getElementById(questionType).style.visibility = "hidden";
-                break;
-            case "multiple-choice":
-                document.getElementById(questionType).style.visibility = "hidden";
-                break;
-            case "picture":
-                document.getElementById(questionType).style.visibility = "hidden";
-                break;
-            case "matching":
-                document.getElementById(questionType).style.visibility = "hidden";
-        }
+        hideAllQuestions();
+        document.getElementById(questionType).style.visibility = "visible";
+    }
+    function defaultSettings() {
+        hideAllQuestions();
+        updateQuestion();
     }
 </script>
 
-<form action="/QuestionServlet" method="post" >
-    <br>Select question type:<br>
-
+<form action="/QuestionServlet" method="post">
+    <br>Select question type:
     <select name="Question Type" id="quest-type" onclick="updateQuestion()">
         <option value="question-response" selected>Question-Response</option>
         <option value="fill">Fill in the Blank</option>
@@ -49,40 +44,58 @@
         <option value="matching">Matching</option>
     </select>
     <div id="question-response">
+        <h2>Question-Response</h2>
         <p>Input your question:</p>
         <input type="text" name="question">
         <br>Enter answer:<br>
         <input type="text" name="answer1">
     </div>
     <div id="fill">
+        <h2>Fill the Blank</h2>
         <p>Input your question:</p>
         <input type="text" name="question1">
         ________<input type="text" name="question2">
-        <br>Enter answer:<br>
+        <br>Enter answer:
         <input type="text" name="answer1">
     </div>
     <div id="multi-answer">
+        <h2>Multi-Answer</h2>
         <p>Input your question:</p>
         <input type="text" name="question">
-        <br>Enter answer:<br>
+        <br>Enter answer:
         <input type="text" name="answer1">
-        <br>Enter second answer:<br>
+        <br>Enter second answer:
         <input type="text" name="answer2">
-        <br>Enter third answer:<br>
+        <br>Enter third answer:
         <input type="text" name="answer3">
-        <br>Enter fourth answer:<br>
+        <br>Enter fourth answer:
+        <input type="text" name="answer4">
+    </div>
+    <div id="multiple-choice">
+        <h2>Multiple-Choice</h2>
+        Input your question:
+        <input type="text" name="question">
+        <br>Enter right answer:
+        <input type="text" name="right-ans">
+        <br>Enter wrong answer:
+        <input type="text" name="answer2">
+        <br>Enter wrong answer:
+        <input type="text" name="answer3">
+        <br>Enter wrong answer:
         <input type="text" name="answer4">
     </div>
     <div id="picture">
-        <p>Input your question:</p>
+        <h2>Picture Response</h2>
+        Input your question:
         <input type="text" name="question">
-        <br>Input image URL (optional):<br>
+        <br>Input image URL:
         <input type="text" name="imageURL">
-        <br>Enter answer:<br>
+        <br>Enter answer:
         <input type="text" name="answer1">
     </div>
     <div id="matching">
-        <br>Enter questions and answers that match<br>
+        <h2>Matching</h2>
+        <p>Enter questions and answers that match:</p>
         <input type="text" name="match-quest1">
         <input type="text" name="match-ans1"><br>
         <input type="text" name="match-quest2">
