@@ -52,6 +52,7 @@
         <option value="matching">Matching</option>
     </select>
     <div id="question-response">
+        <h2>Question Response</h2>
         <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
