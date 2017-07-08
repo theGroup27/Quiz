@@ -52,19 +52,15 @@
         <option value="matching">Matching</option>
     </select>
     <div id="question-response">
-        <h2>Question-Response</h2>
-        <p>Input your question:</p>
-        <input type="text" name="question">
-        <br>Enter answer:<br>
-        <input type="text" name="answer1">
+        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="fill">
         <h2>Fill the Blank</h2>
         <p>Input your question:</p>
         <input type="text" name="question1">
         ________<input type="text" name="question2">
-        <br>Enter answer:
-        <input type="text" name="answer1">
+        <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="multi-answer">
         <h2>Multi-Answer</h2>
@@ -81,25 +77,24 @@
     </div>
     <div id="multiple-choice">
         <h2>Multiple-Choice</h2>
-        Input your question:
-        <input type="text" name="question">
-        <br>Enter right answer:
-        <input type="text" name="right-ans">
-        <br>Enter wrong answer:
-        <input type="text" name="answer2">
-        <br>Enter wrong answer:
-        <input type="text" name="answer3">
-        <br>Enter wrong answer:
-        <input type="text" name="answer4">
+        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+
+        <%
+            for (int i = 0; i<5; i++) {
+                out.println("<p>");
+                String st = Integer.toString(i);
+                out.println("<input type=\"checkbox\" name="+ st +">");
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
+
+        <p>
     </div>
     <div id="picture">
         <h2>Picture Response</h2>
-        Input your question:
-        <input type="text" name="question">
-        <br>Input image URL:
-        <input type="text" name="imageURL">
-        <br>Enter answer:
-        <input type="text" name="answer1">
+        <p><input type="text" name="imageURL" placeholder="enter image url"></p>
+        <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="matching">
         <h2>Matching</h2>
