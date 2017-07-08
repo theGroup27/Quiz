@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Question</title>
+    <title>Question No <%=request.getParameter("id") %></title>
     <style>
         body {background-color: powderblue;}
         /*#matching {*/
@@ -50,20 +50,22 @@
         <option value="picture">Picture-Response</option>
         <option value="matching">Matching</option>
     </select>
+
+    <h2>Question No <%=request.getParameter("id") %></h2>
     <div id="question-response">
-        <h2>Question Response</h2>
+        <h3>Question Response</h3>
         <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="fill">
-        <h2>Fill the Blank</h2>
+        <h3>Fill the Blank</h3>
         <p>Input your question:</p>
         <input type="text" name="question1">
         ________<input type="text" name="question2">
         <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="multi-answer">
-        <h2>Multi-Answer</h2>
+        <h3>Multi-Answer</h3>
         <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <%
             for (int i = 0; i<5; i++) {
@@ -75,7 +77,7 @@
         %>
     </div>
     <div id="multiple-choice">
-        <h2>Multiple-Choice</h2>
+        <h3>Multiple-Choice</h3>
         <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <%
             for (int i = 0; i<5; i++) {
@@ -90,12 +92,12 @@
         <p>
     </div>
     <div id="picture">
-        <h2>Picture Response</h2>
+        <h3>Picture Response</h3>
         <p><input type="text" name="imageURL" placeholder="enter image url"></p>
         <p><input type="text" name="answer" placeholder="enter answer"></p>
     </div>
     <div id="matching">
-        <h2>Matching</h2>
+        <h3>Matching</h3>
         <p>Enter questions and answers that match:</p>
 
         <%
@@ -111,8 +113,9 @@
     </div>
     <br><br>
     <input type="submit" name="next-question" value="Next Question">
-    <input type="submit" name="submit-all" value="Submit and Finish">
+    <input name="numID" type="hidden" value=<%=request.getParameter("id") %>/>
 </form>
 
+<input type="submit" name="submit-all" value="Submit and Finish">
 </body>
 </html>

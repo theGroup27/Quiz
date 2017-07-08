@@ -1,34 +1,32 @@
 package question;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created by anophoo on 7/8/17.
+ * Created by mariam on 09/07/17.
  */
-@WebServlet("/QuestionServlet")
-public class QuestionServlet extends javax.servlet.http.HttpServlet {
+@WebServlet("/CreateQuizServlet")
+public class CreateQuizServlet extends HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
             throws javax.servlet.ServletException, IOException {
-
-        String type = request.getParameter("Question Type");
-        String num = request.getParameter("numID");
-        num = num.substring(0,num.length()-1);
+        String name = request.getParameter("quiz-name");
+        String desc = request.getParameter("quiz-description");
+        String id = "asd";
+        String primaryURL = "Question.jsp";
+        //URL finalURL = new URL(primaryURL + "/asd/");
+        int count = 1;
         RequestDispatcher rd;
-        //String p = request.getContextPath();
-
-
-        int count = Integer.parseInt(num);
-        count ++;
-        //String id = "asd";
         rd = request.getRequestDispatcher("Question.jsp?id="+count);
         rd.forward(request,response);
+    }
 
-
-
-}
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
             throws javax.servlet.ServletException, IOException {
 
