@@ -9,6 +9,9 @@
 <html>
 <head>
     <title>UserRegister</title>
+    <style>
+        body {background-color: #F6CEE3;}
+    </style>
 </head>
 <body>
 <h1>Register</h1>
