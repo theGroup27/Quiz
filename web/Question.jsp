@@ -11,36 +11,35 @@
     <title>Question</title>
     <style>
         body {background-color: powderblue;}
-        #matching {
-            margin-top: 1px;
-            margin-left: 80px;
-        }
-
+        /*#matching {*/
+            /*margin-top: 1px;*/
+            /*margin-left: 80px;*/
+        /*}*/
     </style>
 </head>
 <body onLoad="defaultSettings()">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script language="javascript" type="text/javascript">
     function hideAllQuestions() {
-        document.getElementById("question-response").style.display = "none;"
-        document.getElementById("fill").style.display = "none;"
-        document.getElementById("multi-answer").style.display = "none;"
-        document.getElementById("multiple-choice").style.display = "none;"
-        document.getElementById("picture").style.display = "none;"
-        document.getElementById("matching").style.display = "none;"
+        $("#question-response").hide();
+        $("#fill").hide();
+        $("#multi-answer").hide();
+        $("#multiple-choice").hide();
+        $("#picture").hide();
+        $("#matching").hide();
     }
 
     function updateQuestion() {
         var questionType = document.getElementById("quest-type").value;
         hideAllQuestions();
-        $(questionType).show();
+        $("#"+questionType).show();
     }
     function defaultSettings() {
         hideAllQuestions();
         updateQuestion();
-        $("question-response").show();
+        $("#question-response").show();
     }
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <form action="/QuestionServlet" method="post">
     <br>Select question type:
     <select name="Question Type" id="quest-type" onclick="updateQuestion()">
