@@ -9,7 +9,9 @@
 <html>
 <head>
     <title>Question</title>
-
+    <style>
+        body {background-color: powderblue;}
+    </style>
 </head>
 <body onLoad="defaultSettings()">
 <script language="javascript" type="text/javascript">
