@@ -21,12 +21,12 @@
 <body onLoad="defaultSettings()">
 <script language="javascript" type="text/javascript">
     function hideAllQuestions() {
-        document.getElementById("question-response").stylestyle="display: none;"
-        document.getElementById("fill").style.visibility="display: none;"
-        document.getElementById("multi-answer").style.visibility="display: none;"
-        document.getElementById("multiple-choice").style.visibility ="display: none;"
-        document.getElementById("picture").style.visibility="display: none;"
-        document.getElementById("matching").style.visibility="display: none;"
+        document.getElementById("question-response").style.display = "none;"
+        document.getElementById("fill").style.display = "none;"
+        document.getElementById("multi-answer").style.display = "none;"
+        document.getElementById("multiple-choice").style.display = "none;"
+        document.getElementById("picture").style.display = "none;"
+        document.getElementById("matching").style.display = "none;"
     }
 
     function updateQuestion() {
