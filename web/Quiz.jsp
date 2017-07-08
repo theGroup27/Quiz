@@ -14,5 +14,7 @@
 <h1>Choose Quiz type wisely</h1>
 <h2>Random Questions</h2>
 <h2>Other</h2>
+<a href="Question.jsp">test question</a>
+
 </body>
 </html>
