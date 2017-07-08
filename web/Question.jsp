@@ -11,30 +11,36 @@
     <title>Question</title>
     <style>
         body {background-color: powderblue;}
+        #matching {
+            margin-top: 1px;
+            margin-left: 80px;
+        }
+
     </style>
 </head>
 <body onLoad="defaultSettings()">
 <script language="javascript" type="text/javascript">
     function hideAllQuestions() {
-        document.getElementById("question-response").style.visibility = "hidden";
-        document.getElementById("fill").style.visibility = "hidden";
-        document.getElementById("multi-answer").style.visibility = "hidden";
-        document.getElementById("multiple-choice").style.visibility = "hidden";
-        document.getElementById("picture").style.visibility = "hidden";
-        document.getElementById("matching").style.visibility = "hidden";
+        document.getElementById("question-response").stylestyle="display: none;"
+        document.getElementById("fill").style.visibility="display: none;"
+        document.getElementById("multi-answer").style.visibility="display: none;"
+        document.getElementById("multiple-choice").style.visibility ="display: none;"
+        document.getElementById("picture").style.visibility="display: none;"
+        document.getElementById("matching").style.visibility="display: none;"
     }
 
     function updateQuestion() {
         var questionType = document.getElementById("quest-type").value;
         hideAllQuestions();
-        document.getElementById(questionType).style.visibility = "visible";
+        $(questionType).show();
     }
     function defaultSettings() {
         hideAllQuestions();
         updateQuestion();
+        $("question-response").show();
     }
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <form action="/QuestionServlet" method="post">
     <br>Select question type:
     <select name="Question Type" id="quest-type" onclick="updateQuestion()">
