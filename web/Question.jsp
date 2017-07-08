@@ -64,21 +64,19 @@
     </div>
     <div id="multi-answer">
         <h2>Multi-Answer</h2>
-        <p>Input your question:</p>
-        <input type="text" name="question">
-        <br>Enter answer:
-        <input type="text" name="answer1">
-        <br>Enter second answer:
-        <input type="text" name="answer2">
-        <br>Enter third answer:
-        <input type="text" name="answer3">
-        <br>Enter fourth answer:
-        <input type="text" name="answer4">
+        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <%
+            for (int i = 0; i<5; i++) {
+                out.println("<p>");
+                String st = "answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <div id="multiple-choice">
         <h2>Multiple-Choice</h2>
         <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
-
         <%
             for (int i = 0; i<5; i++) {
                 out.println("<p>");
@@ -99,14 +97,17 @@
     <div id="matching">
         <h2>Matching</h2>
         <p>Enter questions and answers that match:</p>
-        <input type="text" name="match-quest1">
-        <input type="text" name="match-ans1"><br>
-        <input type="text" name="match-quest2">
-        <input type="text" name="match-ans2"><br>
-        <input type="text" name="match-quest3">
-        <input type="text" name="match-ans3"><br>
-        <input type="text" name="match-quest4">
-        <input type="text" name="match-ans4"><br>
+
+        <%
+            for (int i = 0; i<4; i++) {
+                out.println("<p>");
+                String first = "first-match" + Integer.toString(i);
+                String second = "second-match" + Integer.toString(i);
+                out.println("<input type=\"text\" name="+ first +" placeholder=\"enter first match\">");
+                out.println("<input type=\"text\" name="+ second +" placeholder=\"enter second match\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <br><br>
     <input type="submit" name="next-question" value="Next Question">
