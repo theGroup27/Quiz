@@ -10,7 +10,13 @@
 <head>
     <title>Question No <%=request.getParameter("id") %></title>
     <style>
-        body {background-color: powderblue;}
+        <%-- body {background-color: powderblue;} --%>
+        <%-- >:3 --%>
+
+        body {background-color: #F6CEE3;}
+        h2 {color: #FA58AC;}
+        h3 {color: #FA58AC;}
+        p {color: #FA58AC;}
         /*#matching {*/
             /*margin-top: 1px;*/
             /*margin-left: 80px;*/

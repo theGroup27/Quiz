@@ -13,6 +13,8 @@
         #quiz-description {
             resize: none;
         }
+        body {background-color: #F6CEE3;}
+        h2 {color: #FA58AC;}
     </style>
 </head>
 <body>
