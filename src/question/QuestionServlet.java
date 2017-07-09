@@ -17,12 +17,9 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
         String num = request.getParameter("numID");
         num = num.substring(0,num.length()-1);
         RequestDispatcher rd;
-        //String p = request.getContextPath();
-
 
         int count = Integer.parseInt(num);
         count ++;
-        //String id = "asd";
         rd = request.getRequestDispatcher("Question.jsp?id="+count);
         rd.forward(request,response);
 

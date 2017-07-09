@@ -18,9 +18,7 @@ public class CreateQuizServlet extends HttpServlet {
             throws javax.servlet.ServletException, IOException {
         String name = request.getParameter("quiz-name");
         String desc = request.getParameter("quiz-description");
-        String id = "asd";
-        String primaryURL = "Question.jsp";
-        //URL finalURL = new URL(primaryURL + "/asd/");
+
         int count = 1;
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("Question.jsp?id="+count);
