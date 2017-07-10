@@ -26,9 +26,10 @@ foreign key (receiver_id)
 
 create table if not exists quizzes (
 id int(11) not null auto_increment,
+quiz_name varchar (11) not null,
 url_id varchar (11) default null,
 description varchar(200) default null,
-tag varchar (30) default null,
+category varchar (30) default null,
 is_random boolean default false,
 is_one_page boolean default false,
 is_correction boolean default false,

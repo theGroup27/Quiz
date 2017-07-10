@@ -1,5 +1,7 @@
 package question;
 
+import database.DBConnection;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,12 +23,16 @@ public class CreateQuizServlet extends HttpServlet {
             throws javax.servlet.ServletException, IOException {
         String name = request.getParameter("quiz-name");
         String desc = request.getParameter("quiz-description");
+        String cat = "other";
         boolean random = request.getParameter("quiz-is-random") != null;
         boolean onePerPage = request.getParameter("one-per-page") != null;
         boolean immediateCorrection = request.getParameter("immediate-correction") != null;
         boolean allowPractice = request.getParameter("allow-practice-mode") != null;
+        Date date = new Date();
 
-        Quiz quiz = new Quiz(name, desc, random, onePerPage, immediateCorrection, allowPractice, new ArrayList<Question>(), new Date(), new Random());
+        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
+        DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
+        db.addQuiz(quiz);
         // TO-DO attach quiz to current user;
         int count = 1;
         RequestDispatcher rd;

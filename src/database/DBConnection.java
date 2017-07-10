@@ -1,5 +1,6 @@
 package database;
 
+import question.Quiz;
 import staticstuff.Hashing;
 import usersystem.*;
 
@@ -144,6 +145,37 @@ public class DBConnection {
     }
     //temp ######################################################
 
+
+    public void addQuiz(Quiz quiz) {
+        String qr = "insert into quizzes (url_id,quiz_name,description,category," +
+                "is_random,is_one_page,is_correction,creator_id)" +
+                " values " + "(?,?,?,?,?,?,?,?);";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
+
+            Statement stmt = (Statement) con.createStatement();
+            stmt.executeQuery("USE " + database);
+
+            PreparedStatement insertStmt = con.prepareStatement(qr);
+            insertStmt.setString(1,"asdfghjk");
+            insertStmt.setString(2,quiz.getName());
+            insertStmt.setString(3,quiz.getDescription());
+            insertStmt.setString(4,quiz.getCategory());
+            insertStmt.setBoolean(5,quiz.isRandom());
+            insertStmt.setBoolean(6,quiz.isOnePerPage());
+            insertStmt.setBoolean(7,quiz.isImmediateCorrection());
+            insertStmt.setInt(8,1);
+            try {
+                insertStmt.executeUpdate();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
         public boolean isNext() {
