@@ -50,39 +50,40 @@
     .navbar {
         margin-bottom: 0;
         border-radius: 0;
-        background-color: #FA58AC;
+        background-color: #B45F04;
         overflow: hidden;
         <%--style="background-color: #FA58AC; overflow: hidden;"--%>
     }
 
     /* Add a gray background color and some padding to the footer */
     footer {
-        background-color: #FA58AC;
+        background-color: #B45F04;
         padding: 25px;
     }
 
 
     p {
-        color: #FA58AC;
+        color: #B45F04;
     }
     h3 {
-        color: #FA58AC;
+        color: #B45F04;
+    }
+    h4 {
+        color: #B45F04;
     }
     body {
-        background-color: #F6CEE3;
-    }
-    .active {
-        background-color: #FA58AC;
+        background-color: #F3E2A9;
     }
 
+
     .well {
-        background-color: #F8E0F7;
+        background-color: #F5ECCE;
     }
     .right{
-        color: #F6CEE3;
+        color: #F3E2A9;
     }
     .left{
-        color: #F6CEE3;
+        color: #F3E2A9;
     }
 
     .carousel-inner img {
@@ -112,12 +113,20 @@
       <a class="navbar-brand" href="#">Logo</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active" ><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+        <ul class="nav navbar-nav">
+            <li class="active" ><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Maths</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Misc</a></li>
+                </ul>
+            </li>
+        </ul>
       <ul class="nav navbar-nav navbar-right">
           <li><a href="CreateQuiz.jsp">Create Quiz</a></li>
           <li><a href="UserLogin.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -166,7 +175,7 @@
   <div class="row">
       <div class="col-sm-2">
           <div class="well">
-              <h3> Category</h3>
+              <h4>Recently Created</h4>
               <%
                   for (int i = 0; i<6; i++) {
                         out.println("<img src=\"https://placehold.it/150x80?text=IMAGE\" " +
@@ -186,7 +195,7 @@
       </div>
       <div class="col-sm-2">
           <div class="well">
-              <h3> Category</h3>
+              <h4>Your Recent Quizzes</h4>
               <%
                   for (int i = 0; i<6; i++) {
                       out.println("<img src=\"https://placehold.it/150x80?text=IMAGE\" " +
