@@ -1,6 +1,6 @@
 package database;
 
-import question.Quiz;
+import question.*;
 import staticstuff.Hashing;
 import usersystem.*;
 
@@ -113,6 +113,36 @@ public class DBConnection {
     }
 
 
+    public synchronized int getLastID(String table) {
+        String qr = "select * from " + table + " order by id desc limit 1";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://" + server, this.username, password);
+
+            Statement stmt = (Statement) con.createStatement();
+            stmt.executeQuery("USE " + database);
+
+            PreparedStatement selectStmt = con.prepareStatement(qr);
+
+            try {
+                ResultSet rs = selectStmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("id");
+                } else {
+                    return 0;
+                }
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
     public void addInputUsers(String name, String passHash, byte[] salt) {
         String qr = "insert into users (username, user_password, salt)" +
                     " values " + "(?,?,?);";
@@ -146,10 +176,11 @@ public class DBConnection {
     //temp ######################################################
 
 
-    public void addQuiz(Quiz quiz) {
-        String qr = "insert into quizzes (url_id,quiz_name,description,category," +
+    public synchronized void addQuiz(Quiz quiz) {
+        String qr = "insert into quizzes (quiz_name,description,category," +
                 "is_random,is_one_page,is_correction,creator_id)" +
-                " values " + "(?,?,?,?,?,?,?,?);";
+                " values " + "(?,?,?,?,?,?,?);";
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
@@ -158,14 +189,13 @@ public class DBConnection {
             stmt.executeQuery("USE " + database);
 
             PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1,"asdfghjk");
-            insertStmt.setString(2,quiz.getName());
-            insertStmt.setString(3,quiz.getDescription());
-            insertStmt.setString(4,quiz.getCategory());
-            insertStmt.setBoolean(5,quiz.isRandom());
-            insertStmt.setBoolean(6,quiz.isOnePerPage());
-            insertStmt.setBoolean(7,quiz.isImmediateCorrection());
-            insertStmt.setInt(8,1);
+            insertStmt.setString(1,quiz.getName());
+            insertStmt.setString(2,quiz.getDescription());
+            insertStmt.setString(3,quiz.getCategory());
+            insertStmt.setBoolean(4,quiz.isRandom());
+            insertStmt.setBoolean(5,quiz.isOnePerPage());
+            insertStmt.setBoolean(6,quiz.isImmediateCorrection());
+            insertStmt.setInt(7,1);
             try {
                 insertStmt.executeUpdate();
             } catch (SQLException ex){
@@ -176,6 +206,64 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+
+
+    public synchronized void addQuestions(BasicQuestion quest, int quizID) {
+        String qr = "insert into questions(q_type,q_text,quiz_id) values (?,?,?);";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
+
+            Statement stmt = (Statement) con.createStatement();
+            stmt.executeQuery("USE " + database);
+
+            PreparedStatement insertStmt = con.prepareStatement(qr);
+            insertStmt.setString(1,quest.getType());
+            insertStmt.setString(2,quest.getQuestion());
+            insertStmt.setInt(3,quizID);
+
+            try {
+                insertStmt.executeUpdate();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void addAnswers(BasicAnswer answer, int questID) {
+        //
+        String qr = "insert into answers(a_type, answer, is_correct, question_id) values " + "(?,?,?,?);";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
+
+            Statement stmt = (Statement) con.createStatement();
+            stmt.executeQuery("USE " + database);
+
+            PreparedStatement insertStmt = con.prepareStatement(qr);
+            insertStmt.setString(1,answer.getType());
+            insertStmt.setString(2,answer.getAnswer());
+            insertStmt.setBoolean(3,answer.isCorrectAnswer());
+            insertStmt.setInt(4,questID);
+
+            try {
+                insertStmt.executeUpdate();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
         public boolean isNext() {

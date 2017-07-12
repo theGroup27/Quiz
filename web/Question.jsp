@@ -58,23 +58,30 @@
     </select>
 
     <h2>Question No <%=request.getParameter("id") %></h2>
+
     <div id="question-response">
         <h3>Question Response</h3>
-        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
-        <p><input type="text" name="answer" placeholder="enter answer"></p>
+        <p><textarea name="question-response:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
+        <p>Add other variations of a given answer</p>
+        <%
+            for (int i = 2; i<=3; i++) {
+                out.println("<p>");
+                String st = "question-response:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <div id="fill">
         <h3>Fill the Blank</h3>
         <p>Input your question:</p>
         <input type="text" name="question1">
         ________<input type="text" name="question2">
-        <p><input type="text" name="answer" placeholder="enter answer"></p>
-    </div>
-    <div id="multi-answer">
-        <h3>Multi-Answer</h3>
-        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><input type="text" name="answer1" placeholder="enter answer"></p>
+        <p>Add other variations of a given answer</p>
         <%
-            for (int i = 0; i<5; i++) {
+            for (int i = 2; i<=3; i++) {
                 out.println("<p>");
                 String st = "answer"+Integer.toString(i);
                 out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
@@ -82,14 +89,28 @@
             }
         %>
     </div>
+    <div id="multi-answer">
+        <h3>Multi-Answer</h3>
+        <p><textarea name="multi-answer:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <%
+            for (int i = 1; i<=5; i++) {
+                out.println("<p>");
+                String st = "multi-answer:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
+    </div>
     <div id="multiple-choice">
         <h3>Multiple-Choice</h3>
-        <p><textarea name="question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><textarea name="multiple-choice:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p>Check correct answers</p>
         <%
-            for (int i = 0; i<5; i++) {
+            for (int i = 1; i<=5; i++) {
                 out.println("<p>");
-                String st = Integer.toString(i);
-                out.println("<input type=\"checkbox\" name="+ st +">");
+                String st = "multiple-choice:answer" + i;
+                String s = "multiple-choice:checkbox" + i;
+                out.println("<input type=\"checkbox\" name="+ s +">");
                 out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
                 out.println("</p>");
             }
@@ -99,15 +120,25 @@
     </div>
     <div id="picture">
         <h3>Picture Response</h3>
-        <p><input type="text" name="imageURL" placeholder="enter image url"></p>
-        <p><input type="text" name="answer" placeholder="enter answer"></p>
+        <p><input type="text" name="picture:question" placeholder="enter image url"></p>
+        <p><input type="text" name="picture:answer1" placeholder="enter answer"></p>
+        <p>Add other variations of a given answer</p>
+        <%
+            for (int i = 2; i<=3; i++) {
+                out.println("<p>");
+                String st = "picture:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <div id="matching">
         <h3>Matching</h3>
+        <p><input type="text" name="question" placeholder="enter question"></p>
         <p>Enter questions and answers that match:</p>
 
         <%
-            for (int i = 0; i<4; i++) {
+            for (int i = 1; i<=4; i++) {
                 out.println("<p>");
                 String first = "first-match" + Integer.toString(i);
                 String second = "second-match" + Integer.toString(i);

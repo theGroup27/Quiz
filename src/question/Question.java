@@ -14,13 +14,15 @@ public interface Question {
      * @param answer
      * @return
      */
-    boolean submitAnswer(Answer answer);
+    void submitAnswer(String answer, boolean isCorrect);
 
     /**
      * Retruns the type ID of the question.
      * @return
      */
-    int getTypeId();
+    String getType();
+
+
 
     List<Answer> getAnswers();
 

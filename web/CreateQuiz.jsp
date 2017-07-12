@@ -29,7 +29,7 @@
     One question per page. <input type="checkbox" name="one-per-page"> <br>
     Immediate correction. <input type="checkbox" name="immediate-correction"> <br>
     Allow practice mode. <input type="checkbox" name="allow-practice-mode"> <br>
-    <input type="submit" name="create-quiz" value = "Create question.Quiz">
+    <input type="submit" name="create-quiz" value = "Create Quiz">
 
 </form>
 

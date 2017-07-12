@@ -11,14 +11,15 @@ import java.util.Random;
  * Created by luka on 10-Jul-17.
  */
 public class Quiz {
-    private String name = "";
-    private String category = "";
-    private String description = "";
-    private boolean isRandom = false;
-    private boolean isOnePerPage = false;
-    private boolean isImmediateCorrection = false;
+    int id = 0;
+    private String name;
+    private String category;
+    private String description;
+    private boolean isRandom;
+    private boolean isOnePerPage;
+    private boolean isImmediateCorrection;
     private Date creationTime = new Date();
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
     private Random rand = new Random();
     private int cur;
 
@@ -41,6 +42,14 @@ public class Quiz {
 //        } else {
             questions.add(q);
         //}
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public List <Question> getQuestions () {
