@@ -18,7 +18,7 @@
 <p>answers</p>
 <div id="question-response">
     <h3>Question Response</h3>
-    <p>Question itself></p>
+    <p>Question itself</p>
     <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
 </div>
 <div id="fill">
@@ -30,12 +30,12 @@
 </div>
 <div id="multi-answer">
     <h3>Multi-Answer</h3>
-    <p>Question itself></p>
+    <p>Question itself</p>
     <p><input type="text" name="multi-answer:answer" placeholder="enter answer"></p>
 </div>
 <div id="multiple-choice">
     <h3>Multiple-Choice</h3>
-    <p>Question itself></p>
+    <p>Question itself</p>
     <p><textarea name="multiple-choice:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
     <p>ეს შესაცვლელია</p>
     <%
@@ -51,14 +51,13 @@
 </div>
 <div id="picture">
     <h3>Picture Response</h3>
-    <p>Question itself></p>
+    <p>Question itself</p>
     <p><input type="text" name="picture:answer1" placeholder="enter answer"></p>
 </div>
 <div id="matching">
     <h3>Matching</h3>
-    <p><input type="text" name="question" placeholder="enter question"></p>
+    <p>Question itself</p>
     <p>ეს შესაცვლელია:</p>
-
     <%
         for (int i = 1; i<=4; i++) {
             out.println("<p>");
