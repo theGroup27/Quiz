@@ -36,7 +36,6 @@
 <div id="multiple-choice">
     <h3>Multiple-Choice</h3>
     <p>Question itself</p>
-    <p><textarea name="multiple-choice:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
     <p>ეს შესაცვლელია</p>
     <%
         for (int i = 1; i<=5; i++) {
@@ -52,6 +51,7 @@
 <div id="picture">
     <h3>Picture Response</h3>
     <p>Question itself</p>
+    <img src="https://abroad.fiu.edu/_customtags/ct_Image.cfm?Image_ID=9027" alt="Deadline kills" style="width:250px;height:130px;">
     <p><input type="text" name="picture:answer1" placeholder="enter answer"></p>
 </div>
 <div id="matching">
