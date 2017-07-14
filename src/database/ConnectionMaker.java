@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by kdufla on 7/12/17.
@@ -20,7 +21,8 @@ public class ConnectionMaker{
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://" + server+"?autoReconnect=true&useSSL=false", account, password);
-			//con.setCatalog(database);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
 		}catch(SQLException e){
 			e.printStackTrace();
 		}catch(ClassNotFoundException e){

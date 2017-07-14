@@ -7,6 +7,12 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Quiz" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="com.google.code.gson:gson:2.8.1" />
+          <element id="library" level="module" name="JUnit5" module-name="Quiz" />
+          <element id="library" level="module" name="JUnit4" module-name="Quiz" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.42-bin" />
+        </element>
       </element>
     </root>
   </artifact>
