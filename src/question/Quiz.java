@@ -102,6 +102,4 @@ public class Quiz {
         gson.toJson(q);
         return gson;
     }*/
-
-
 }
