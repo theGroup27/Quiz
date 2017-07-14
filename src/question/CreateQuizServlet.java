@@ -30,7 +30,7 @@ public class CreateQuizServlet extends HttpServlet {
         boolean allowPractice = request.getParameter("allow-practice-mode") != null;
         Date date = new Date();
 
-        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
+        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection, allowPractice);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         db.addQuiz(quiz);
         //lock

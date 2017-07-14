@@ -1,6 +1,6 @@
 package question;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +11,7 @@ import java.util.Random;
  * Created by luka on 10-Jul-17.
  */
 public class Quiz {
+    private final boolean allowPractie;
     int id = 0;
     private String name;
     private String category;
@@ -24,13 +25,14 @@ public class Quiz {
     private int cur;
 
     public Quiz(String name, String description, String category, boolean isRandom, boolean isOnePerPage,
-                boolean immediateCorrection) {
+                boolean immediateCorrection, boolean allowPractice) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.isRandom = isRandom;
         this.isOnePerPage = isOnePerPage;
         this.isImmediateCorrection = immediateCorrection;
+        this.allowPractie = allowPractice;
         //this.creationTime = creationTime;
         this.cur = 0;
     }
@@ -92,14 +94,14 @@ public class Quiz {
 //        }
 //    }
 
-    public Gson getNextQuestionData() {
+/*    public Gson getNextQuestionData() {
 
         Question q = questions.get(cur);
         cur++;
         Gson gson = new Gson();
         gson.toJson(q);
         return gson;
-    }
+    }*/
 
 
 }
