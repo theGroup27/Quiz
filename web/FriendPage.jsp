@@ -14,16 +14,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script language="javascript" type="text/javascript">
     function updateToCancel() {
-        $("#add").hide();
-        $("#cancel").show();
+        $("#addButton").hide();
+        $("#cancelButton").show();
     }
     function updateToAdd() {
-        $("#cancel").hide();
-        $("#add").show();
+        $("#cancelButton").hide();
+        $("#addButton").show();
     }
 </script>
     <p>You are seeing <%=request.getParameter("friendname") %>'s page</p>
     <!--<form action="/SearchUserServlet" method="post">-->
-    <button id="add" type="button" onclick="alert('Request has been sent!'), updateToCancel()">Add Friend</button></body>
-    <button id="cancel" type="button" onclick="alert('Request has been canceled!'), updateToAdd()">Cancel Friend Request</button></body>
+    <button id="addButton" type="button" onclick="alert('Request has been sent!'), updateToCancel()">Add Friend</button></body>
+    <button id="cancelButton" type="button" onclick="alert('Request has been canceled!'), updateToAdd()">Cancel Friend Request</button></body>
 </html>

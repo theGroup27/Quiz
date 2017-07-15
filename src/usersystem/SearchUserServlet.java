@@ -36,7 +36,7 @@ public class SearchUserServlet extends javax.servlet.http.HttpServlet {
             request.setAttribute("friendname", nameInput);
             rd = request.getRequestDispatcher("FriendPage.jsp");
         } else {
-            rd = request.getRequestDispatcher("Error.jsp");
+            rd = request.getRequestDispatcher("FriendError.jsp");
         }
         rd.forward(request, response);
     }
