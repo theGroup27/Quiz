@@ -18,28 +18,12 @@
 
     <!-- Latest compiled JavaScript -->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--</head>
-  <body>
-  <h1>Homepage Rules</h1>
-  <p>Announcement from administrators</p>
-  <p>Popular Quizzes</p>
-  <p>Recently Created Quizzes</p>
-  <p><a href="CreateQuiz.jsp">Create Quiz</a></p>
-  <p>
-    <a href="UserLogin.jsp">log in</a>
-    or
-    <a href="UserRegister.jsp">Register</a>
-
-  </p>
-  </body>
-</html>-->
-
 
 <!-- USING BOOTSTRAP TEMPLATE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Quizzes Yeah</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -52,6 +36,7 @@
         border-radius: 0;
         background-color: #B45F04;
         overflow: hidden;
+        position: relative !important;
         <%--style="background-color: #FA58AC; overflow: hidden;"--%>
     }
 
@@ -60,7 +45,6 @@
         background-color: #B45F04;
         padding: 25px;
     }
-
 
     p {
         color: #B45F04;
@@ -89,8 +73,12 @@
     .carousel-inner img {
       width: 100%; /* Set width to 100% */
       margin: auto;
-      min-height:200px;
+      min-height: 200px;
     }
+
+    /*#myCarousel {*/
+        /*z-index: -1000*/
+    /*}*/
 
     /* Hide the carousel text when the screen is less than 600 pixels wide */
     @media (max-width: 600px) {
@@ -114,9 +102,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
+            <!-- Home -->
             <li class="active" ><a href="#">Home</a></li>
+            <!-- About -->
             <li><a href="#">About</a></li>
+            <!-- Notifications -->
             <li><a href="#">Notifications</a></li>
+            <!-- Categories -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories
                     <span class="caret"></span></a>
@@ -127,9 +119,21 @@
                 </ul>
             </li>
         </ul>
+        <!-- Search bar -->
+        <form class="navbar-form navbar-right" role="search">
+            <div class="form-group input-group">
+                <input type="text" class="form-control" placeholder="Search User...">
+                <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+            </div>
+        </form>
       <ul class="nav navbar-nav navbar-right">
+          <!-- Create Quiz -->
           <li><a href="CreateQuiz.jsp">Create Quiz</a></li>
-          <li><a href="UserLogin.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <!-- <li><a href="UserLogin.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
       </ul>
     </div>
   </div>
@@ -145,14 +149,14 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="https://placehold.it/1200x400?text=IMAGE" alt="Image">
+      <img src="https://s-media-cache-ak0.pinimg.com/originals/94/67/95/9467959377351995b301443f7efd06dc.jpg" alt="Image">
       <div class="carousel-caption">
         <h3>Random Stuff</h3>
       </div>
     </div>
 
     <div class="item">
-      <img src="https://placehold.it/1200x400?text=Another Image Maybe" alt="Image">
+      <img src="https://s-media-cache-ak0.pinimg.com/originals/23/55/bf/2355bf44941dff7c6c06d1b706ab916a.jpg" alt="Image">
       <div class="carousel-caption">
         <h3>Random Stuff 2</h3>
       </div>
