@@ -29,6 +29,7 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
 
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
 
+
         RequestDispatcher rd;
 
 
@@ -42,7 +43,10 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
                     byte[] salt = pass.generateSalt();
                     passInput = pass.getHashValue(passInput,salt);
                     User usr = new User(1,nameInput,passInput,salt);
-                    db.getUserDao().addInputUsers(nameInput, usr.getPasswordString(),salt);
+                    db.getUserDao().addInputUsers(usr);
+                    //lock
+                    usr.setID(db.getStaticDao().getLastID("users"));
+                    //unlock
                     rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
                 } else {
                     rd = request.getRequestDispatcher("Error.jsp");

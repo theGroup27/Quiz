@@ -53,14 +53,14 @@ public class UserDAO {
         return user;
     }
 
-    public void addInputUsers(String name, String passHash, byte[] salt) {
+    public void addInputUsers(User usr) {
         String qr = "insert into users (username, user_password, salt)" +
                 " values " + "(?,?,?);";
         try {
             PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1, name);
-            insertStmt.setString(2, passHash);
-            insertStmt.setString(3, Hashing.hexToString(salt));
+            insertStmt.setString(1, usr.getUserName());
+            insertStmt.setString(2, usr.getPasswordString());
+            insertStmt.setString(3, Hashing.hexToString(usr.getSalt()));
             try {
                 insertStmt.executeUpdate();
             } catch (SQLException ex) {
