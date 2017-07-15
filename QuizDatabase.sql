@@ -66,7 +66,7 @@ foreign key (quiz_id)
 
 create table if not exists answers (
 id int(11) not null auto_increment,
-a_type enum('text_response','multiple') default null,
+a_type enum('text_response','multiple_choice','multiple_answer') default null,
 answer varchar (200) default null,
 is_correct boolean default false,
 question_id int(11) not null,
