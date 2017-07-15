@@ -6,7 +6,7 @@ import java.util.*;
 
 public class User {
     private byte[] salt;
-    private int id;
+    private int id = 0;
     private byte[] passBytes;
     private List<String> achList = new ArrayList<String>();
     private List<User> friendList = new ArrayList<User>();
@@ -26,6 +26,14 @@ public class User {
     public String getPasswordString() {
         String hash = Hashing.hexToString(this.passBytes);
         return hash;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public byte[] getPasswordBin() {

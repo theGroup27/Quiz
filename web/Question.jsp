@@ -153,6 +153,8 @@
     <input name="numID" type="hidden" value=<%=request.getParameter("id") %>/>
 </form>
 
-<input type="submit" name="submit-all" value="Submit and Finish">
+<form action = "index.jsp">
+    <input type="submit" name="submit-all" value="Submit and Finish">
+</form>
 </body>
 </html>

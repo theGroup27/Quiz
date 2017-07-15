@@ -21,7 +21,8 @@ public class ConnectionForPool implements Connection{
 	private ConnectionPool pool;
 
 	public ConnectionForPool(Connection realConnection, ConnectionPool pool){
-
+		this.pool = pool;
+		this.realConnection = realConnection;
 	}
 
 	@Override
