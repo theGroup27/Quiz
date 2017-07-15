@@ -28,9 +28,9 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
 
         //currentQuiz.getID();
         //if (quest != "")
-        db.addQuestions(question,2);
+        db.getQuizDao().addQuestions(question,2);
         //lock
-        int id = db.getLastID("questions");
+        int id = db.getStaticDao().getLastID("questions");
         question.setID(id);
         //unlock
         int quant = 3;
@@ -50,7 +50,7 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
                     else bool = false;
                 }
                 BasicAnswer answer = new BasicAnswer(ans,type,bool);
-                db.addAnswers(answer, question.getID());
+                db.getQuizDao().addAnswers(answer, question.getID());
             }
         }
 

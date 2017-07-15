@@ -2,6 +2,7 @@ package database;
 
 import question.*;
 import staticstuff.Hashing;
+import staticstuff.StaticDAO;
 import usersystem.*;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by jiiok on 6/16/2017.
  */
 public class DBConnection {
+
 
     //returns list of all users from database
 //    private List<User> getAllUsers(){
@@ -29,272 +31,104 @@ public class DBConnection {
 //        return res;
 //    }
 
-//    /*
+    //    /*
 //    inner class to connect to mysql, send statements and to keep track of result set
 //     */
 //    class connection {
-        private String server = MyDBInfo.MYSQL_DATABASE_SERVER;
-        private String username = MyDBInfo.MYSQL_USERNAME;
-        private String password = MyDBInfo.MYSQL_PASSWORD;
-        private String database = MyDBInfo.MYSQL_DATABASE_NAME;
+    private String server = MyDBInfo.MYSQL_DATABASE_SERVER;
+    private String username = MyDBInfo.MYSQL_USERNAME;
+    private String password = MyDBInfo.MYSQL_PASSWORD;
+    private String database = MyDBInfo.MYSQL_DATABASE_NAME;
 
-        private Connection con;
+    private Connection con;
 
-        private ResultSet rs;
+    private ResultSet rs;
 
-        private Statement statement;
-
-
-        public void call() {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
-
-                Statement stmt = (Statement) con.createStatement();
-                stmt.executeQuery("USE " + database);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void sendStatement(String statementString) {
-            try {
-                statement = (Statement) con.createStatement();
-                rs = statement.executeQuery(statementString);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+    private Statement statement;
+    UserDAO userDao;
+    QuizDAO quizDao;
+    StaticDAO staticDao;
 
 
-
-
-    ///temp methods ##########################################
-
-    public User getUserByUsername(String username) throws SQLException{
-        String table ="users";
-        String qr = "select * from " + table + " as x where x.username = ?";
+    public DBConnection() {
+        ConnectionPool pool = new ConnectionPool(1, 10);
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + server, this.username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement selectStmt = con.prepareStatement(qr);
-
-            try {
-                selectStmt.setString(1,username);
-                ResultSet rs = selectStmt.executeQuery();
-                System.out.println(rs.toString());
-                if (rs.next()) {
-                    return getUserFromRes(rs);
-                } else {
-                    return null;
-                }
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public User getUserFromRes(ResultSet res) throws SQLException {
-        int id = res.getInt("id");
-        String name = res.getString("username");
-        String password = res.getString("user_password");
-        String salt = res.getString("salt");
-
-        User user = new User(id,name,password,Hashing.hexToArray(salt));
-        return user;
-    }
-
-
-    public synchronized int getLastID(String table) {
-        String qr = "select * from " + table + " order by id desc limit 1";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + server, this.username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement selectStmt = con.prepareStatement(qr);
-
-            try {
-                ResultSet rs = selectStmt.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt("id");
-                } else {
-                    return 0;
-                }
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-
-
-    public void addInputUsers(String name, String passHash, byte[] salt) {
-        String qr = "insert into users (username, user_password, salt)" +
-                    " values " + "(?,?,?);";
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1,name);
-            insertStmt.setString(2,passHash);
-            insertStmt.setString(3,Hashing.hexToString(salt));
-            try {
-
-                //System.out.println(passBytes.length+"===============" + insertStmt.toString());
-
-                insertStmt.executeUpdate();
-
-
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    //temp ######################################################
-
-
-    public synchronized void addQuiz(Quiz quiz) {
-        String qr = "insert into quizzes (quiz_name,description,category," +
-                "is_random,is_one_page,is_correction,creator_id)" +
-                " values " + "(?,?,?,?,?,?,?);";
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1,quiz.getName());
-            insertStmt.setString(2,quiz.getDescription());
-            insertStmt.setString(3,quiz.getCategory());
-            insertStmt.setBoolean(4,quiz.isRandom());
-            insertStmt.setBoolean(5,quiz.isOnePerPage());
-            insertStmt.setBoolean(6,quiz.isImmediateCorrection());
-            insertStmt.setInt(7,1);
-            try {
-                insertStmt.executeUpdate();
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
+            Connection con = pool.get();
+            userDao = new UserDAO(con);
+            quizDao = new QuizDAO(con);
+            staticDao = new StaticDAO(con);
+        } catch (InterruptedException e){
             e.printStackTrace();
         }
     }
 
+    public UserDAO getUserDao() {
+        return userDao;
+    }
 
+    public QuizDAO getQuizDao() {
+        return quizDao;
+    }
 
-    public synchronized void addQuestions(BasicQuestion quest, int quizID) {
-        String qr = "insert into questions(q_type,q_text,quiz_id) values (?,?,?);";
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1,quest.getType());
-            insertStmt.setString(2,quest.getQuestion());
-            insertStmt.setInt(3,quizID);
-
-            try {
-                insertStmt.executeUpdate();
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public StaticDAO getStaticDao() {
+        return staticDao;
     }
 
 
-    public void addAnswers(BasicAnswer answer, int questID) {
-        //
-        String qr = "insert into answers(a_type, answer, is_correct, question_id) values " + "(?,?,?,?);";
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
-
-            Statement stmt = (Statement) con.createStatement();
-            stmt.executeQuery("USE " + database);
-
-            PreparedStatement insertStmt = con.prepareStatement(qr);
-            insertStmt.setString(1,answer.getType());
-            insertStmt.setString(2,answer.getAnswer());
-            insertStmt.setBoolean(3,answer.isCorrectAnswer());
-            insertStmt.setInt(4,questID);
-
-            try {
-                insertStmt.executeUpdate();
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-        public boolean isNext() {
-            boolean isThereNext = false;
-            try {
-                isThereNext = rs.next();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return isThereNext;
-        }
-
-        public String getString(int index) {
-            String res = null;
-
-            try {
-                res = rs.getString(index);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return res;
-        }
-
-        public void close() {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-//    }
 }
+
+
+//        public void call() {
+//            try {
+//                Class.forName("com.mysql.jdbc.Driver");
+//                Connection con = DriverManager.getConnection("jdbc:mysql://" + server, username, password);
+//
+//                Statement stmt = (Statement) con.createStatement();
+//                stmt.executeQuery("USE " + database);
+//            } catch (SQLException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        public void sendStatement(String statementString) {
+//            try {
+//                statement = (Statement) con.createStatement();
+//                rs = statement.executeQuery(statementString);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//
+//        public boolean isNext() {
+//            boolean isThereNext = false;
+//            try {
+//                isThereNext = rs.next();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return isThereNext;
+//        }
+//
+//        public String getString(int index) {
+//            String res = null;
+//
+//            try {
+//                res = rs.getString(index);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return res;
+//        }
+//
+//        public void close() {
+//            try {
+//                con.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+////    }
+//}

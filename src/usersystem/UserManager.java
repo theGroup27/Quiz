@@ -25,7 +25,7 @@ public class UserManager {
     public boolean usernameExists(String username) {
         DBConnection db = new DBConnection();
         try {
-            if (db.getUserByUsername(username) != null)
+            if (db.getUserDao().getUserByUsername(username) != null)
                 return true;
             else return false;
         } catch (SQLException e){

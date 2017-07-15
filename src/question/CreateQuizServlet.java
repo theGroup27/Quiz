@@ -32,9 +32,9 @@ public class CreateQuizServlet extends HttpServlet {
 
         Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection, allowPractice);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-        db.addQuiz(quiz);
+        db.getQuizDao().addQuiz(quiz);
         //lock
-        quiz.setID(db.getLastID("quizzes"));
+        quiz.setID(db.getStaticDao().getLastID("quizzes"));
         //unlock
         // TO-DO attach quiz to current user;
         int count = 1;

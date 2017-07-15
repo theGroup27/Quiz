@@ -42,7 +42,7 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
                     byte[] salt = pass.generateSalt();
                     passInput = pass.getHashValue(passInput,salt);
                     User usr = new User(1,nameInput,passInput,salt);
-                    db.addInputUsers(nameInput, usr.getPasswordString(),salt);
+                    db.getUserDao().addInputUsers(nameInput, usr.getPasswordString(),salt);
                     rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
                 } else {
                     rd = request.getRequestDispatcher("Error.jsp");

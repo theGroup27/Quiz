@@ -29,7 +29,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         User user = null;
         try {
-            user = db.getUserByUsername(nameInput);
+            user = db.getUserDao().getUserByUsername(nameInput);
             System.out.println("#####~" + user.getUserName());
         } catch (SQLException e) {
             e.printStackTrace();
