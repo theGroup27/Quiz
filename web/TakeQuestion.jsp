@@ -42,15 +42,22 @@
     if (answer.getType().equals("text_response")) {
 %>
 <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
-<%
-
-    }
-    if (answer.getType().equals("multiple")) {
+<%  }
+    if (answer.getType().equals("multiple_answer")) {
         for (int i = 0; i < answers.size(); i++) {
 %>
 <p><input type="text" name="multiple:answer1" placeholder="enter answer"></p>
-<%
-        }
+<%      }
+    }
+    if (answer.getType().equals("multiple_choice")) {
+        for (int i = 0; i < answers.size(); i++) {
+            BasicAnswer ans = (BasicAnswer)db.getQuizDao().getObjectByID(answers.get(i),"answers");
+            String answerText = ans.getAnswer();
+%>
+<p><input type="checkbox" name="multiple:checkbox1">
+<%=answerText%>
+</p>
+<%      }
     }
 %>
 <p><input type="submit" name="Next"></p>

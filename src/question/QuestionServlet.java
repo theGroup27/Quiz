@@ -34,7 +34,7 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
         question.setID(id);
         //unlock
         int quant = 3;
-        if (type.equals("multi-answer")||type.equals("multiple-choice"))
+        if (type.equals("multiple_answer")||type.equals("multiple_choice"))
             quant = 5;
 
         for (int i =1; i<=quant; i++) {
@@ -43,7 +43,7 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
             if (ans != "") {
                 answers.add(ans);
                 boolean bool = true;
-                if (type.equals("multiple-choice")) {
+                if (type.equals("multiple_choice")) {
                     String s = type+":checkbox"+i;
                     if (request.getParameter(s)!=null)
                         bool = true;

@@ -29,8 +29,8 @@
     function hideAllQuestions() {
         $("#question-response").hide();
         $("#fill").hide();
-        $("#multi-answer").hide();
-        $("#multiple-choice").hide();
+        $("#multiple_answer").hide();
+        $("#multiple_choice").hide();
         $("#picture").hide();
         $("#matching").hide();
     }
@@ -51,8 +51,8 @@
     <select name="Question Type" id="quest-type" onclick="updateQuestion()">
         <option value="question-response" selected>Question-Response</option>
         <option value="fill">Fill in the Blank</option>
-        <option value="multi-answer">Multi-Answers</option>
-        <option value="multiple-choice">Multiple Choice</option>
+        <option value="multiple_answer">Multi-Answers</option>
+        <option value="multiple_choice">Multiple Choice</option>
         <option value="picture">Picture-Response</option>
         <option value="matching">Matching</option>
     </select>
@@ -89,27 +89,27 @@
             }
         %>
     </div>
-    <div id="multi-answer">
+    <div id="multiple_answer">
         <h3>Multi-Answer</h3>
-        <p><textarea name="multi-answer:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><textarea name="multiple_answer:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <%
             for (int i = 1; i<=5; i++) {
                 out.println("<p>");
-                String st = "multi-answer:answer"+Integer.toString(i);
+                String st = "multiple_answer:answer"+Integer.toString(i);
                 out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
                 out.println("</p>");
             }
         %>
     </div>
-    <div id="multiple-choice">
+    <div id="multiple_choice">
         <h3>Multiple-Choice</h3>
-        <p><textarea name="multiple-choice:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
+        <p><textarea name="multiple_choice:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <p>Check correct answers</p>
         <%
             for (int i = 1; i<=5; i++) {
                 out.println("<p>");
-                String st = "multiple-choice:answer" + i;
-                String s = "multiple-choice:checkbox" + i;
+                String st = "multiple_choice:answer" + i;
+                String s = "multiple_choice:checkbox" + i;
                 out.println("<input type=\"checkbox\" name="+ s +">");
                 out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
                 out.println("</p>");
