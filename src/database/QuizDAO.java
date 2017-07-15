@@ -15,7 +15,7 @@ public class QuizDAO {
         this.con = con;
     }
 
-    public synchronized void addQuiz(Quiz quiz) {
+    public synchronized void addQuiz(Quiz quiz, int userID) {
         String qr = "insert into quizzes (quiz_name,description,category," +
                 "is_random,is_one_page,is_correction,creator_id)" +
                 " values " + "(?,?,?,?,?,?,?);";
@@ -29,7 +29,7 @@ public class QuizDAO {
             insertStmt.setBoolean(4,quiz.isRandom());
             insertStmt.setBoolean(5,quiz.isOnePerPage());
             insertStmt.setBoolean(6,quiz.isImmediateCorrection());
-            insertStmt.setInt(7,1);
+            insertStmt.setInt(7,userID);
             try {
                 insertStmt.executeUpdate();
             } catch (SQLException ex){

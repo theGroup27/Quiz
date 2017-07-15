@@ -1,6 +1,7 @@
 package question;
 
 import database.DBConnection;
+import usersystem.UserManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,11 +33,15 @@ public class CreateQuizServlet extends HttpServlet {
 
         Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection, allowPractice);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-        db.getQuizDao().addQuiz(quiz);
+        //current user connecting
+        UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
+        //
+        int id = usrMng.getCurrentUser().getID();
+        //to be edited
+        db.getQuizDao().addQuiz(quiz,1);
         //lock
         quiz.setID(db.getStaticDao().getLastID("quizzes"));
         //unlock
-        // TO-DO attach quiz to current user;
         int count = 1;
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("Question.jsp?id="+count);

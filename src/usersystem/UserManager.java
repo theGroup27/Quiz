@@ -8,9 +8,18 @@ import java.sql.SQLException;
  * Created by mariam on 14/06/17.
  */
 public class UserManager {
-
+    User curr;
     public UserManager() {}
 
+
+    public void setCurrentUser(User curr) {
+        this.curr = curr;
+    }
+
+    public User getCurrentUser() {
+        return this.curr;
+    }
+    
     public boolean isPassword(User user, String password) {
         Password pass = new Password();
         String passEntered = pass.getHashValue(password,user.getSalt());

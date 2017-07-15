@@ -24,13 +24,12 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
         RequestDispatcher rd;
 
-        UserManager usrMng = new UserManager();
+        UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
 
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         User user = null;
         try {
             user = db.getUserDao().getUserByUsername(nameInput);
-            System.out.println("#####~" + user.getUserName());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,7 +37,9 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         if (usrMng.isAppropriatePassword(passInput) && usrMng.isAppropriateUsername(nameInput)) {
             if (usrMng.usernameExists(nameInput) && user!=null
                     && usrMng.isPassword(user,passInput)) {
-                rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
+                usrMng.setCurrentUser(user);
+                //rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
+                rd = request.getRequestDispatcher("index.jsp");
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");
             }
