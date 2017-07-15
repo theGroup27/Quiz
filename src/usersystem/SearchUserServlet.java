@@ -32,6 +32,8 @@ public class SearchUserServlet extends javax.servlet.http.HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            // set some attributes
+            request.setAttribute("friendname", nameInput);
             rd = request.getRequestDispatcher("FriendPage.jsp");
         } else {
             rd = request.getRequestDispatcher("Error.jsp");
