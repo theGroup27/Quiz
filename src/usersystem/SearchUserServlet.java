@@ -18,6 +18,25 @@ public class SearchUserServlet extends javax.servlet.http.HttpServlet {
         // check whether user exists or not
         // if exists, go to FriendPage.jsp
         // if not, go to some error page
+        String nameInput = request.getParameter("friendname");
+
+        RequestDispatcher rd;
+
+        UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
+
+        DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
+        if (usrMng.usernameExists(nameInput)) {
+            User user = null;
+            try {
+                user = db.getUserDao().getUserByUsername(nameInput);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            rd = request.getRequestDispatcher("FriendPage.jsp");
+        } else {
+            rd = request.getRequestDispatcher("Error.jsp");
+        }
+        rd.forward(request, response);
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
