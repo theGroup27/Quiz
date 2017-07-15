@@ -14,7 +14,7 @@ public class BasicAnswer {
     public BasicAnswer(String ansText, String type, boolean isCorrect) {
         this.ansText = ansText;
 
-        if (type.equals("multi-answer")||type.equals("multiple-choice")) {
+        if (type.equals("multi-answer")||type.equals("multiple-choice")||type.equals("multiple")) {
             this.type = "multiple";
         } else this.type = "text_response";
         this.isCorrect = isCorrect;

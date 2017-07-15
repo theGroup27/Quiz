@@ -200,7 +200,7 @@
                   for (int i = 0; i<6; i++) {
                       out.println("<img src=\"https://placehold.it/150x80?text=IMAGE\" " +
                       "class=\"img-responsive\" style=\"width:100%\" alt=\"Image\">");
-                      out.println("<p>Quiz</p>");
+                      out.println("<p><a href=\"TakeQuiz.jsp?quizID=1\">quiz</a></p>");
                   }
               %>
           </div>

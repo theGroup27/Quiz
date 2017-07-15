@@ -31,12 +31,12 @@ public class CreateQuizServlet extends HttpServlet {
         boolean allowPractice = request.getParameter("allow-practice-mode") != null;
         Date date = new Date();
 
-        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection, allowPractice);
+        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         //current user connecting
         UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
         //
-        int id = usrMng.getCurrentUser().getID();
+        //int id = usrMng.getCurrentUser().getID();
         //to be edited
         db.getQuizDao().addQuiz(quiz,1);
         //lock

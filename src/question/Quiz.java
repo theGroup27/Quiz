@@ -11,7 +11,6 @@ import java.util.Random;
  * Created by luka on 10-Jul-17.
  */
 public class Quiz {
-    private final boolean allowPractie;
     int id = 0;
     private String name;
     private String category;
@@ -25,14 +24,13 @@ public class Quiz {
     private int cur;
 
     public Quiz(String name, String description, String category, boolean isRandom, boolean isOnePerPage,
-                boolean immediateCorrection, boolean allowPractice) {
+                boolean immediateCorrection) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.isRandom = isRandom;
         this.isOnePerPage = isOnePerPage;
         this.isImmediateCorrection = immediateCorrection;
-        this.allowPractie = allowPractice;
         //this.creationTime = creationTime;
         this.cur = 0;
     }
@@ -53,6 +51,8 @@ public class Quiz {
     public int getID() {
         return id;
     }
+
+    //creator id
 
     public List <Question> getQuestions () {
         return this.questions;
