@@ -17,7 +17,7 @@ public class SearchUserServlet extends javax.servlet.http.HttpServlet {
         // get user by name
         // check whether user exists or not
         // if exists, go to FriendPage.jsp
-        // if not, go to some error page
+        // if not, go to FriendError.jsp
         String nameInput = request.getParameter("friendname");
 
         RequestDispatcher rd;

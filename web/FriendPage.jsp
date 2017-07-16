@@ -23,7 +23,9 @@
     }
 </script>
     <p>You are seeing <%=request.getParameter("friendname") %>'s page</p>
-    <!--<form action="/SearchUserServlet" method="post">-->
-    <button id="addButton" type="button" onclick="alert('Request has been sent!'), updateToCancel()">Add Friend</button></body>
-    <button id="cancelButton" type="button" onclick="alert('Request has been canceled!'), updateToAdd()">Cancel Friend Request</button></body>
+    <form action="/AddFriendServlet" method="post">
+        <button id="addButton" type="button" onclick="alert('Request has been sent!'), updateToCancel()">Add Friend</button>
+        <button id="cancelButton" type="button" onclick="alert('Request has been canceled!'), updateToAdd()">Cancel Friend Request</button>
+    </form>
+</body>
 </html>

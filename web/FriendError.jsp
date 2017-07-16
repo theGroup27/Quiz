@@ -18,7 +18,7 @@
         <input type="text" class="form-control" name="friendname" placeholder="Search User...">
     </div>
 </form>
-<a id="homepageButton" href="index.jsp">Go Back to Homepage</a>
+<a id="homepage" href="index.jsp">Go Back to Homepage</a>
 
 </body>
 </html>
