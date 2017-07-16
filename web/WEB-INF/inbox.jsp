@@ -18,18 +18,18 @@
 <html>
 <head>
     <%
-        ConnectionPool p= ConnectionPoolMaker.getConnetionPool(100,200);
-        Connection c=p.get();
+        //got daos from DBConnection
+        DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         User user = (User) request.getSession().getAttribute(UserListener.sessionOwnerUser);
-        MessageDAO dao =new MessageDAO(c);
-        UserDAO userDAO=new database.UserDAO(c);
+        MessageDAO msgDao = db.getMsgDao();
+        UserDAO userDao = db.getUserDao();
     %>
     <title>Title</title>
 </head>
 <body>
     <%
 
-        List list = dao.getLastMessages(50);
+        List list = msgDao.getLastMessages(50);
 
         for (Object message:list){
         	int i=((Message)message).getSenderId();

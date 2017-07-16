@@ -1,10 +1,7 @@
 <%@ page import="usersystem.UserListener" %>
 <%@ page import="usersystem.User" %>
-<%@ page import="database.MessageDAO" %>
 <%@ page import="java.sql.Connection" %>
-<%@ page import="database.ConnectionPoolMaker" %>
-<%@ page import="database.ConnectionPool" %>
-<%@ page import="database.UserDAO" %><%--
+<%@ page import="database.*" %><%--
   Created by IntelliJ IDEA.
   User: kdufla
   Date: 7/16/17
@@ -16,11 +13,11 @@
 <head>
     <title>Title</title>
     <%
-        ConnectionPool p= ConnectionPoolMaker.getConnetionPool(100,200);
-        Connection c=p.get();
         User user = (User) request.getSession().getAttribute(UserListener.sessionOwnerUser);
-        MessageDAO dao =new MessageDAO(c);
-        UserDAO userDAO=new UserDAO(c);
+        //got daos from DBConnection
+        DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
+        MessageDAO msgDao = db.getMsgDao();
+        UserDAO userDao = db.getUserDao();
         String mesText = request.getParameter("username");
     %>
 </head>
