@@ -28,6 +28,7 @@ public class DBConnection {
     UserDAO userDao;
     QuizDAO quizDao;
     StaticDAO staticDao;
+    MessageDAO msgDao;
 
 
     public DBConnection() {
@@ -37,6 +38,7 @@ public class DBConnection {
             userDao = new UserDAO(con);
             quizDao = new QuizDAO(con);
             staticDao = new StaticDAO(con);
+            msgDao = new MessageDAO(con);
         } catch (InterruptedException e){
             e.printStackTrace();
         }
@@ -44,6 +46,10 @@ public class DBConnection {
 
     public UserDAO getUserDao() {
         return userDao;
+    }
+
+    public MessageDAO getMsgDao() {
+        return msgDao;
     }
 
     public QuizDAO getQuizDao() {

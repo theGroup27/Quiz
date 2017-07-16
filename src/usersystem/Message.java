@@ -11,12 +11,21 @@ public class Message{
 	private int recieverId;
 	private String messageText;
 	private Timestamp timestamp;
+	private int id = 0;
 
 	public Message(int senderId, int recieverId, String messageText, Timestamp timestamp){
 		this.senderId=senderId;
 		this.recieverId=recieverId;
 		this.messageText=messageText;
 		this.timestamp=timestamp;
+	}
+
+	public void setID(int id) {
+		this.id = id;
+	}
+
+	public int getID() {
+		return id;
 	}
 
 	public int getSenderId(){

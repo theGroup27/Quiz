@@ -13,9 +13,11 @@ constraint pk primary key (id)
 );
 
 create table if not exists contacts (
+id int(11) not null auto_increment,
 sender_id int(11) not null,
 receiver_id int(11) not null,
 are_friends boolean default false,
+constraint pk primary key (id),
 constraint fk_first_id
 foreign key (sender_id) 
 	references users(id),
@@ -25,9 +27,12 @@ foreign key (receiver_id)
 );
 
 create table if not exists messages (
+id int(11) not null auto_increment,
 sender_id int(11) not null,
 receiver_id int(11) not null,
 message text default null,
+created timestamp default now(),
+constraint pk primary key (id),
 constraint fk_sender_id
 foreign key (sender_id) 
 	references users(id),
