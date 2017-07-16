@@ -24,6 +24,18 @@ foreign key (receiver_id)
 	references users(id)
 );
 
+create table if not exists messages (
+sender_id int(11) not null,
+receiver_id int(11) not null,
+message text default null,
+constraint fk_sender_id
+foreign key (sender_id) 
+	references users(id),
+constraint fk_receiver_id
+foreign key (receiver_id) 
+	references users(id)
+);
+
 create table if not exists quizzes (
 id int(11) not null auto_increment,
 url_id varchar (11) default null,
