@@ -36,7 +36,7 @@
 <form>
     <%
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-        Quiz quiz = (Quiz) db.getQuizDao().getObjectByID(id,"quizzes");
+        Quiz quiz = (Quiz) db.getStaticDao().getObjectByID(id,"quizzes");
         List<Integer> ids = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
     %>
     <h2><%= quiz.getName() %></h2>

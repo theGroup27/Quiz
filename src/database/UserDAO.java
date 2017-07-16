@@ -1,6 +1,7 @@
 package database;
 
 import staticstuff.Hashing;
+import staticstuff.StaticDAO;
 import usersystem.Password;
 import usersystem.User;
 
@@ -43,7 +44,7 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserFromRes(ResultSet res) throws SQLException {
+    private User getUserFromRes(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String name = res.getString("username");
         String password = res.getString("user_password");

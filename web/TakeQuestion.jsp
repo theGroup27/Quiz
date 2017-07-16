@@ -15,12 +15,12 @@
     <%
         int id = Integer.parseInt(request.getParameter("queID"));
     %>
-    <title>Quiz <%=id%></title>
+    <title>Question <%=id%></title>
 </head>
 <body>
 <%
     DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-    BasicQuestion question = (BasicQuestion)db.getQuizDao().getObjectByID(id,"questions");
+    BasicQuestion question = (BasicQuestion)db.getStaticDao().getObjectByID(id,"questions");
     String questionType = question.getType();
     String text = question.getQuestion();
     List<Integer> answers = db.getQuizDao().getAnswerIds(id);
@@ -36,30 +36,34 @@
 <%}%>
 
 <%-- Does the same for answers --%>
+<%-- <form action = ScoringServlet> --%>
+<%BasicAnswer answer = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(0),"answers");%>
+    <input name="answer_type" type="hidden" value=<%=answer.getType()%>/>
 <%
-
-    BasicAnswer answer = (BasicAnswer)db.getQuizDao().getObjectByID(answers.get(0),"answers");
     if (answer.getType().equals("text_response")) {
 %>
 <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
 <%  }
     if (answer.getType().equals("multiple_answer")) {
         for (int i = 0; i < answers.size(); i++) {
+            String name = "multiple_choice:answer"+i;
 %>
-<p><input type="text" name="multiple:answer1" placeholder="enter answer"></p>
+<p><input type="text" name="<%=name%>" placeholder="enter answer"></p>
 <%      }
     }
     if (answer.getType().equals("multiple_choice")) {
         for (int i = 0; i < answers.size(); i++) {
-            BasicAnswer ans = (BasicAnswer)db.getQuizDao().getObjectByID(answers.get(i),"answers");
+            BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(i),"answers");
             String answerText = ans.getAnswer();
+            String name = "multiple_choice:checkbox"+i;
 %>
-<p><input type="checkbox" name="multiple:checkbox1">
+<p><input type="checkbox" name=<%=name%>>
 <%=answerText%>
 </p>
 <%      }
     }
 %>
 <p><input type="submit" name="Next"></p>
+<%-- </form> --%>
 </body>
 </html>
