@@ -39,6 +39,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
                     && usrMng.isPassword(user,passInput)) {
                 usrMng.setCurrentUser(user);
                 //rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
+                request.getSession().setAttribute(UserListener.sessionOwnerUser, user);
                 rd = request.getRequestDispatcher("index.jsp");
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");

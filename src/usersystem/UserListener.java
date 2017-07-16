@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSessionBindingEvent;
 public class UserListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 
+    public static String sessionOwnerUser = "user";
+
     // Public constructor is required by servlet spec
     public UserListener() {
     }
