@@ -15,7 +15,15 @@
     %>
     <title>Take Quiz <%=id%></title>
 
-    <style></style>
+    <script>
+
+        function put(i){
+            $.get("TakeQuestion.jsp?queID=" + i, function(data){
+                $("#placeholder").replaceWith(data);
+            });
+        }
+
+    </script>
 
     <!--code from https://www.w3schools.com-->
     <!-- Latest compiled and minified CSS -->
@@ -26,6 +34,13 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        #main{
+            display: none;
+        }
+
+    </style>
 
 </head>
 
@@ -39,10 +54,20 @@
         Quiz quiz = (Quiz) db.getStaticDao().getObjectByID(id,"quizzes");
         List<Integer> ids = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
     %>
+    <div id = "head">
     <h2><%= quiz.getName() %></h2>
     <p><%= quiz.getDescription() %></p>
     <%--<%=id%>--%>
-    <a href = "TakeQuestion.jsp?queID=<%=ids.get(0)%>">Take Quiz</a>
+    <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
+    </div>
+    <div id = "main">
+        <%
+            for(int i = 0; i < ids.size(); i++){ %>
+            <div id = "placeholder"></div>
+            <script>put(<%=ids.get(i)%>);</script>
+
+        <% }%>
+    </div>
     <%--%><p><input type="submit" class="btn btn-danger" value="Start Quiz"></p>--%>
 </form>
 </body>
