@@ -8,6 +8,8 @@ import usersystem.User;
 import javax.sql.*;
 import java.sql.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mariam on 03/07/17.
@@ -83,5 +85,73 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /* adds friend request sender and receiver users into contacts database */
+    public void addContacts(int senderID, int receiverID) {
+        String qr = "insert into contacts (sender_id, receiver_id, are_friends)" +
+                " values " + "(?,?,?);";
+        try {
+            PreparedStatement insertStmt = con.prepareStatement(qr);
+            insertStmt.setInt(1, senderID);
+            insertStmt.setInt(2, receiverID);
+            insertStmt.setBoolean(3, false );
+            try {
+                insertStmt.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* sets are_friends true if receiver accepts sender's request */
+    public void makeFriends(int senderID, int receiverID) {
+        String qr = "update contacts set are_friends = true where sender_id = ? and receiver_id";
+        try {
+            PreparedStatement friendshipStmt = con.prepareStatement(qr);
+            friendshipStmt.setInt(1,senderID);
+            friendshipStmt.setInt(2,receiverID);
+            friendshipStmt.execute();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* returns friends' ids of a specific user */
+    public List<Integer> getFriendsIDs(int userID) {
+        String qr = "select * from contacts as x where (x.sender_id = ? or x.receiver_id = ?) and are_friends = true";
+        try {
+            PreparedStatement selectStmt = con.prepareStatement(qr);
+            selectStmt.setInt(1,userID);
+            selectStmt.setInt(2,userID);
+            try {
+                ResultSet rs = selectStmt.executeQuery();
+                return getFriendID(rs, userID);
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Integer> getFriendID(ResultSet res, int userID) throws SQLException {
+        List<Integer> ids = new ArrayList<>();
+        while(res.next()) {
+            int id = 0;
+            if (res.getInt("receiver_id") == userID)
+                id = res.getInt("sender_id");
+            if (res.getInt("sender_id") == userID)
+                id = res.getInt("receiver_id");
+            ids.add(id);
+        }
+        return ids;
     }
 }
