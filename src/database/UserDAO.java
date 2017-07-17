@@ -72,4 +72,16 @@ public class UserDAO {
                 e.printStackTrace();
             }
     }
+
+    public void makeAdmin(String username) {
+        String qr = "update users set is_admin = true where username = ?";
+        try {
+            PreparedStatement makeAdminStmt = con.prepareStatement(qr);
+            makeAdminStmt.setString(1, username);
+            makeAdminStmt.execute();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
