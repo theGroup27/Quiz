@@ -60,20 +60,18 @@
     <div id = "head">
     <h2><%= quiz.getName() %></h2>
     <p><%= quiz.getDescription() %></p>
-    <%--<%=id%>--%>
+    <%  if (quiz.isOnePerPage()) { %>
     <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
     </div>
     <div id = "main">
-        <%
-            if (quiz.isOnePerPage()) {
-                for(int i = 0; i < questIDs.size(); i++){ %>
+        <%for(int i = 0; i < questIDs.size(); i++){ %>
             <div class="well">
                 <div id = "placeholder"></div>
                 <script>put(<%=questIDs.get(i)%>);</script>
             </div>
         <%      }
             } else {%>
-                <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">start quiz</a>
+                <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">Take Quiz</a>
         <%
             }
         %>
