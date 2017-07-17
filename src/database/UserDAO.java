@@ -51,6 +51,10 @@ public class UserDAO {
         String salt = res.getString("salt");
 
         User user = new User(id,name,password,Hashing.hexToArray(salt));
+        boolean isAdmin = res.getBoolean("is_admin");
+        if (isAdmin) {
+                user.setAdmin();
+        }
         return user;
     }
 
