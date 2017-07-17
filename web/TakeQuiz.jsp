@@ -61,9 +61,9 @@
     <h2><%= quiz.getName() %></h2>
     <p><%= quiz.getDescription() %></p>
     <%  if (quiz.isOnePerPage()) { %>
-    <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
-    </div>
-    <div id = "main">
+        <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
+        </div>
+        <div id = "main">
         <%for(int i = 0; i < questIDs.size(); i++){ %>
             <div class="well">
                 <div id = "placeholder"></div>
@@ -77,7 +77,6 @@
         %>
 
     </div>
-    <%--%><p><input type="submit" class="btn btn-danger" value="Start Quiz"></p>--%>
 </form>
 </body>
 </html>

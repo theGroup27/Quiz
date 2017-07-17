@@ -23,7 +23,7 @@ public class SessionEssentials {
     public void addToOverallScore(int score) {
         currScore = currScore+score;
     }
-    public int getCurrentOveralScore() {
+    public int getCurrentScore() {
         return currScore;
     }
 }

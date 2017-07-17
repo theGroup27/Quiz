@@ -11,13 +11,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
+
 <head>
 
-    <input name="quID" type="hidden" value=<%=request.getParameter("quiID") %>/>
+
     <%
-        int id = Integer.parseInt(request.getParameter("queID"));
+
     %>
-    <title>Question <%=id%></title>
+    <title>Question</title>
     <!--code from https://www.w3schools.com-->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,7 +31,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<form action = /ScoringServlet method="post">
+    <input name="queID" type="hidden" value=<%=request.getParameter("queID") %>/>
 <%
+    int id = Integer.parseInt(request.getParameter("queID"));
     DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
     SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
     int quizID = sE.getCurrentQuiz();
@@ -39,7 +44,6 @@
     String text = question.getQuestion();
     List<Integer> answers = db.getQuizDao().getAnswerIds(id);
 %>
-
 <div class="well">
 <%-- checks question types and uses question text appropriately --%>
 <%-- posts as text --%>
@@ -52,7 +56,7 @@
 <%}%>
 
 <%-- Does the same for answers --%>
-<form action = ScoringServlet>
+
 
 <%
     BasicAnswer answer = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(0),"answers");%>
@@ -60,11 +64,11 @@
 <%
     if (answer.getType().equals("text_response")) {
 %>
-<p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
+<p><input type="text" name="text_response:answer0" placeholder="enter answer"></p>
 <%  }
     if (answer.getType().equals("multiple_answer")) {
         for (int i = 0; i < answers.size(); i++) {
-            String name = "multiple_choice:answer"+i;
+            String name = "multiple_answer:answer"+i;
 %>
 <p><input type="text" name="<%=name%>" placeholder="enter answer"></p>
 <%      }
@@ -82,13 +86,14 @@
 <%      }
     }
 %>
-<p><input type="submit" name="Next"></p>
+<p><input type="submit" name="Next" value ="Next Question"></p>
+</form>
     <%if (questIDs.indexOf(id)==questIDs.size()-1) {%>
     <p><a href="index.jsp">finish</a></p>
     <%} else {%>
     <p><a href="TakeQuestion.jsp?queID=<%=questIDs.get(questIDs.indexOf(id)+1)%>">next question</a></p>
     <%}%>
     </div>
-</form>
+
 </body>
 </html>
