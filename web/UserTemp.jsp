@@ -14,5 +14,7 @@
 <body>
     <input name="userID" type="hidden" value=<%=request.getParameter("id") %>/>
     <p> Thanks for signing up, <%=request.getParameter("id") %> </p>
+    <a id="homepage" href="index.jsp">Go Back to Homepage</a>
+
 </body>
 </html>
