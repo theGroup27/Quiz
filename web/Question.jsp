@@ -45,6 +45,29 @@
         updateQuestion();
         $("#question-response").show();
     }
+
+    $(document).ready(function(){
+        var main = $(".varations");
+        var button = $(".addVaration");
+
+        var count = 1;
+        $(button).click(function(e){
+            e.preventDefault();
+            var id = $(this).parent().parent().attr("id");
+            var name = id + ":answer" + parseInt(count);
+            var placeHolder = "enter answer";
+            count++;
+
+            $(main).append("<p><input type=\"text\" name=\" " + name + " \" placeholder = \" " + placeHolder + " \"/><a href=\"#\" class=\"remove_field\">Remove</a></p>");
+        });
+
+        $(main).on("click",".remove_field", function(e){
+            e.preventDefault();
+            $(this).parent('p').remove();
+            count--;
+        })
+
+    });
 </script>
 <form action="/QuestionServlet" method="post">
     <br>Select question type:
@@ -63,15 +86,9 @@
         <h3>Question Response</h3>
         <p><textarea name="question-response:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
-        <p>Add other variations of a given answer</p>
-        <%
-            for (int i = 2; i<=3; i++) {
-                out.println("<p>");
-                String st = "question-response:answer"+Integer.toString(i);
-                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
-                out.println("</p>");
-            }
-        %>
+        <div class = "varations">
+            <button class = "addVaration">Add More Varations</button>
+        </div>
     </div>
     <div id="fill">
         <h3>Fill the Blank</h3>
@@ -80,14 +97,9 @@
         ________<input type="text" name="question2">
         <p><input type="text" name="answer1" placeholder="enter answer"></p>
         <p>Add other variations of a given answer</p>
-        <%
-            for (int i = 2; i<=3; i++) {
-                out.println("<p>");
-                String st = "answer"+Integer.toString(i);
-                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
-                out.println("</p>");
-            }
-        %>
+        <div class = "varations">
+            <button class = "addVaration">Add More Varations</button>
+        </div>
     </div>
     <div id="multiple_answer">
         <h3>Multi-Answer</h3>
@@ -123,14 +135,9 @@
         <p><input type="text" name="picture:question" placeholder="enter image url"></p>
         <p><input type="text" name="picture:answer1" placeholder="enter answer"></p>
         <p>Add other variations of a given answer</p>
-        <%
-            for (int i = 2; i<=3; i++) {
-                out.println("<p>");
-                String st = "picture:answer"+Integer.toString(i);
-                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
-                out.println("</p>");
-            }
-        %>
+        <div class = "varations">
+            <button class = "addVaration">Add More Varations</button>
+        </div>
     </div>
     <div id="matching">
         <h3>Matching</h3>
