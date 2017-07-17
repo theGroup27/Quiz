@@ -1,7 +1,8 @@
 <%@ page import="question.Quiz" %>
 <%@ page import="database.DBConnection" %>
 <%@ page import="question.BasicQuestion" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="staticstuff.SessionEssentials" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 12/07/17
@@ -52,21 +53,29 @@
     <%
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         Quiz quiz = (Quiz) db.getStaticDao().getObjectByID(id,"quizzes");
-        List<Integer> ids = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
+        List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
+        sE.setCurrentQuiz(id);
     %>
     <div id = "head">
     <h2><%= quiz.getName() %></h2>
     <p><%= quiz.getDescription() %></p>
-    <%--<%=id%>--%>
+    <%  if (quiz.isOnePerPage()) { %>
     <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
     </div>
     <div id = "main">
+        <%for(int i = 0; i < questIDs.size(); i++){ %>
+            <div class="well">
+                <div id = "placeholder"></div>
+                <script>put(<%=questIDs.get(i)%>);</script>
+            </div>
+        <%      }
+            } else {%>
+                <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">Take Quiz</a>
         <%
-            for(int i = 0; i < ids.size(); i++){ %>
-            <div id = "placeholder"></div>
-            <script>put(<%=ids.get(i)%>);</script>
+            }
+        %>
 
-        <% }%>
     </div>
     <%--%><p><input type="submit" class="btn btn-danger" value="Start Quiz"></p>--%>
 </form>
