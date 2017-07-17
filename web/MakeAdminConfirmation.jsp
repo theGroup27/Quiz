@@ -74,9 +74,9 @@
 </head>
 <body>
 <div class="make-admin-popup" role="alert">
-    <p id="ma-question">Are you sure you want to make <span id="target-user"><%= request.getParameter("target-user")%></span> an admin?</p>
+    <p id="ma-question">Are you sure you want to make <b><%= request.getParameter("target-user")%></b> an admin?</p>
         <span class="make-admin-button" id="yes-button" onclick="makeAdmin(); return false">yes</span>
-        <span class="make-admin-button" id="no-button" onclick="this.parentElement.style.display='none';">no</span>
+        <span class="make-admin-button" id="no-button" onclick="this.parentElement.remove(); window.history.back()">no</span>
 </div> <!-- cd-popup -->
 </body>
 </html>
