@@ -1,7 +1,8 @@
 <%@ page import="question.Quiz" %>
 <%@ page import="database.DBConnection" %>
 <%@ page import="question.BasicQuestion" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="staticstuff.SessionEssentials" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 12/07/17
@@ -52,7 +53,9 @@
     <%
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         Quiz quiz = (Quiz) db.getStaticDao().getObjectByID(id,"quizzes");
-        List<Integer> ids = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
+        List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
+        sE.setCurrentQuiz(id);
     %>
     <div id = "head">
     <h2><%= quiz.getName() %></h2>
@@ -62,11 +65,19 @@
     </div>
     <div id = "main">
         <%
-            for(int i = 0; i < ids.size(); i++){ %>
-            <div id = "placeholder"></div>
-            <script>put(<%=ids.get(i)%>);</script>
+            if (quiz.isOnePerPage()) {
+                for(int i = 0; i < questIDs.size(); i++){ %>
+            <div class="well">
+                <div id = "placeholder"></div>
+                <script>put(<%=questIDs.get(i)%>);</script>
+            </div>
+        <%      }
+            } else {%>
+                <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">start quiz</a>
+        <%
+            }
+        %>
 
-        <% }%>
     </div>
     <%--%><p><input type="submit" class="btn btn-danger" value="Start Quiz"></p>--%>
 </form>
