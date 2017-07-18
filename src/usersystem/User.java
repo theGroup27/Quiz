@@ -49,6 +49,14 @@ public class User {
 
     }
 
+    public void respondToFriendRequest() {
+        // if receiver_id is in column, then check, what they want
+        // if accept:
+        // contacts insert (id, sender, receiver, true)
+        // else:
+        // delete this row
+    }
+
     public List<User> getFriends() {
         return friendList;
     }

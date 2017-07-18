@@ -1,3 +1,4 @@
+create schema if not EXISTS 'quizzes';
 use Quizzes;
 
 create table if not exists users (
