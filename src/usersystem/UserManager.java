@@ -20,15 +20,7 @@ public class UserManager {
         return this.curr;
     }
     
-    public boolean isPassword(User user, String password) {
-        Password pass = new Password();
-        String passEntered = pass.getHashValue(password,user.getSalt());
-        String passUser = user.getPasswordString();
-        System.out.println(passEntered+ ",,,,,");
-        if (passUser.equals(passEntered))
-            return true;
-        return false;
-    }
+
 
 
     public boolean usernameExists(String username) {

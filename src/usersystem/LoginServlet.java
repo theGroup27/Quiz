@@ -38,10 +38,8 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
         if (usrMng.isAppropriatePassword(passInput) && usrMng.isAppropriateUsername(nameInput)) {
             if (usrMng.usernameExists(nameInput) && user!=null
-                    && usrMng.isPassword(user,passInput)) {
+                    && user.isPassword(passInput)) {
                 sE.setCurrentUser(user.getID());
-                //rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
-                //request.getSession().setAttribute(UserListener.sessionOwnerUser, user);
                 rd = request.getRequestDispatcher("homepage.jsp");
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");

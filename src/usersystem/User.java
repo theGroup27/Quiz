@@ -23,6 +23,15 @@ public class User {
         //update database
     }
 
+    public boolean isPassword(String password) {
+        Password pass = new Password();
+        String passEntered = pass.getHashValue(password,getSalt());
+        String passUser = getPasswordString();
+        System.out.println(passEntered+ ",,,,,");
+        if (passUser.equals(passEntered))
+            return true;
+        return false;
+    }
     public String getPasswordString() {
         String hash = Hashing.hexToString(this.passBytes);
         return hash;

@@ -22,7 +22,7 @@
     <script>
 
         function put(i){
-            $.get("TakeQuestion.jsp?queID=" + i, function(data){
+            $.get("TakePageQuestion.jsp?queID=" + i, function(data){
                 $("#placeholder").replaceWith(data);
             });
         }
@@ -74,7 +74,7 @@
     <div id = "head">
     <h2><%= quiz.getName() %></h2>
     <p><%= quiz.getDescription() %></p>
-    <%  if (quiz.isOnePerPage()) { %>
+    <%  if (!quiz.isOnePerPage()) { %>
         <a href = "#" onclick="document.getElementById('head').style.display = 'none'; document.getElementById('main').style.display = 'block'">Take Quiz</a>
         </div>
         <div id = "main">
@@ -83,14 +83,15 @@
                 <div id = "placeholder"></div>
                 <script>put(<%=questIDs.get(i)%>);</script>
             </div>
-        <%      }
-            } else {%>
-                <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">Take Quiz</a>
-        <%
-            }
-        %>
+        <%      } %>
+
 
     </div>
+           <%  } else {%>
+            <a href="TakeQuestion.jsp?queID=<%=questIDs.get(0)%>">Take Quiz</a>
+                <%
+            }
+        %>
 </form>
 </body>
 </html>

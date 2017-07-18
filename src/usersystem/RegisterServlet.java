@@ -2,6 +2,7 @@ package usersystem;
 
 import database.DBConnection;
 import staticstuff.Hashing;
+import staticstuff.StaticDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,7 +46,7 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
                     User usr = new User(1,nameInput,passInput,salt);
                     db.getUserDao().addInputUsers(usr);
                     //lock
-                    usr.setID(db.getStaticDao().getLastID("users"));
+                    usr.setID(StaticDAO.getLastID("users"));
                     //unlock
                     rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
                 } else {

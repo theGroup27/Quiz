@@ -130,12 +130,7 @@
 </div>--%>
     <%
         sE.setCurrentScore(0);
-        if (questIDs.indexOf(id)==questIDs.size()-1) {%>
-    <p><a href="homepage.jsp">finish</a></p>
-    <%}%> <%--else {%>
-    <p><a href="TakeQuestion.jsp?queID=<%=questIDs.get(questIDs.indexOf(id)+1)%>">next question</a></p>
-    <%}%>
-    </div>--%>
+    %>
 
 </body>
 </html>
