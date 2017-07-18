@@ -1,4 +1,3 @@
-create schema if not EXISTS 'quizzes';
 use Quizzes;
 
 create table if not exists users (
@@ -49,7 +48,6 @@ is_random boolean default false,
 is_one_page boolean default false,
 is_correction boolean default false,
 creator_id int(11) not null,
-unique key url_uniq (url_id),
 constraint pk primary key (id),
 constraint fk_creator_id
 foreign key (creator_id) 
