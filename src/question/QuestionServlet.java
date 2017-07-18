@@ -1,6 +1,7 @@
 package question;
 
 import database.DBConnection;
+import staticstuff.SessionEssentials;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -17,27 +18,36 @@ public class QuestionServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
             throws javax.servlet.ServletException, IOException {
 
-        String type = request.getParameter("Question Type");
+        String type = request.getParameter("QuestionType");
         String num = request.getParameter("numID");
-        String quest = request.getParameter(type+":question");
+        String quest = "";
+        if (type.equals("fill")) {
+            String quest1 = request.getParameter(type + ":question1");
+            String quest2 = request.getParameter(type + ":question2");
+                quest = quest1 + "____" + quest2;
+        } else {
+            quest = request.getParameter(type + ":question");
+        }
 
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
 
         BasicQuestion question = new BasicQuestion(quest, type);
         List<String> answers = new ArrayList<>();
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
 
-        //currentQuiz.getID();
-        //if (quest != "")
-        db.getQuizDao().addQuestions(question,2);
+        if (quest != "")
+            db.getQuizDao().addQuestions(question,sE.getCurrentQuiz());
         //lock
         int id = db.getStaticDao().getLastID("questions");
         question.setID(id);
         //unlock
-        int quant = 3;
+        int maxCount = 3;
         if (type.equals("multiple_answer")||type.equals("multiple_choice"))
-            quant = 5;
+            maxCount = 5;
 
-        for (int i =1; i<=quant; i++) {
+
+
+        for (int i =1; i<=maxCount; i++) {
             String par = type+":answer"+i;
             String ans = request.getParameter(par);
             if (ans != "") {

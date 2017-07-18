@@ -2,7 +2,8 @@
 <%@ page import="database.DBConnection" %>
 <%@ page import="question.BasicQuestion" %>
 <%@ page import="java.util.List" %>
-<%@ page import="staticstuff.SessionEssentials" %><%--
+<%@ page import="staticstuff.SessionEssentials" %>
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 12/07/17
@@ -56,6 +57,8 @@
         List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
         SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
         sE.setCurrentQuiz(id);
+        Date date = new Date();
+        sE.setBeginning(date);
     %>
     <div id = "head">
     <h2><%= quiz.getName() %></h2>

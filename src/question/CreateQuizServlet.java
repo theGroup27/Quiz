@@ -1,6 +1,7 @@
 package question;
 
 import database.DBConnection;
+import staticstuff.SessionEssentials;
 import usersystem.UserManager;
 
 import javax.servlet.RequestDispatcher;
@@ -34,14 +35,16 @@ public class CreateQuizServlet extends HttpServlet {
         Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         //current user connecting
-        UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
+
         //
-        //int id = usrMng.getCurrentUser().getID();
+        //int id = sE.getCurrentUser();
         //to be edited
         db.getQuizDao().addQuiz(quiz,1);
         //lock
         quiz.setID(db.getStaticDao().getLastID("quizzes"));
         //unlock
+        sE.setCurrentQuiz(quiz.getID());
         int count = 1;
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("Question.jsp?id="+count);

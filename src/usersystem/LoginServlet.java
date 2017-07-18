@@ -2,6 +2,7 @@ package usersystem;
 
 import database.DBConnection;
 import database.MyDBInfo;
+import staticstuff.SessionEssentials;
 //import database.UserDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +26,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         RequestDispatcher rd;
 
         UserManager usrMng = (UserManager)request.getSession().getAttribute("User Manager");
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
 
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         User user = null;
@@ -37,9 +39,9 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         if (usrMng.isAppropriatePassword(passInput) && usrMng.isAppropriateUsername(nameInput)) {
             if (usrMng.usernameExists(nameInput) && user!=null
                     && usrMng.isPassword(user,passInput)) {
-                usrMng.setCurrentUser(user);
+                sE.setCurrentUser(user.getID());
                 //rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
-                request.getSession().setAttribute(UserListener.sessionOwnerUser, user);
+                //request.getSession().setAttribute(UserListener.sessionOwnerUser, user);
                 rd = request.getRequestDispatcher("index.jsp");
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");

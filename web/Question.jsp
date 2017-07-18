@@ -32,9 +32,7 @@
         $("#multiple_answer").hide();
         $("#multiple_choice").hide();
         $("#picture").hide();
-        $("#matching").hide();
     }
-
     function updateQuestion() {
         var questionType = document.getElementById("quest-type").value;
         hideAllQuestions();
@@ -45,33 +43,29 @@
         updateQuestion();
         $("#question-response").show();
     }
-
     $(document).ready(function(){
         var main = $(".varations");
         var button = $(".addVaration");
-
-        var count = 1;
+        var count = 2;
         $(button).click(function(e){
             e.preventDefault();
-            var id = $(this).parent().parent().attr("id");
-            var name = id + ":answer" + parseInt(count);
+            var type = document.getElementById('quest-type').value
+
+            var name = type + ":answer" + parseInt(count);
             var placeHolder = "enter answer";
             count++;
-
             $(main).append("<p><input type=\"text\" name=\" " + name + " \" placeholder = \" " + placeHolder + " \"/><a href=\"#\" class=\"remove_field\">Remove</a></p>");
         });
-
         $(main).on("click",".remove_field", function(e){
             e.preventDefault();
             $(this).parent('p').remove();
             count--;
         })
-
     });
 </script>
 <form action="/QuestionServlet" method="post">
     <br>Select question type:
-    <select name="Question Type" id="quest-type" onclick="updateQuestion()">
+    <select name="QuestionType" id="quest-type" onclick="updateQuestion()">
         <option value="question-response" selected>Question-Response</option>
         <option value="fill">Fill in the Blank</option>
         <option value="multiple_answer">Multi-Answers</option>
@@ -86,20 +80,31 @@
         <h3>Question Response</h3>
         <p><textarea name="question-response:question" placeholder="enter question" rows="4" cols="50"></textarea></p>
         <p><input type="text" name="question-response:answer1" placeholder="enter answer"></p>
-        <div class = "varations">
-            <button class = "addVaration">Add More Varations</button>
-        </div>
+        <p>Add other variations of a given answer</p>
+        <%
+            for (int i = 2; i<=10; i++) {
+                out.println("<p>");
+                String st = "question-response:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <div id="fill">
         <h3>Fill the Blank</h3>
         <p>Input your question:</p>
-        <input type="text" name="question1">
-        ________<input type="text" name="question2">
-        <p><input type="text" name="answer1" placeholder="enter answer"></p>
+        <input type="text" name="fill:question1">
+        ________<input type="text" name="fill:question2">
+        <p><input type="text" name="fill:answer1" placeholder="enter answer"></p>
         <p>Add other variations of a given answer</p>
-        <div class = "varations">
-            <button class = "addVaration">Add More Varations</button>
-        </div>
+        <%
+            for (int i = 2; i<=15; i++) {
+                out.println("<p>");
+                String st = "fill:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
+                out.println("</p>");
+            }
+        %>
     </div>
     <div id="multiple_answer">
         <h3>Multi-Answer</h3>
@@ -135,22 +140,11 @@
         <p><input type="text" name="picture:question" placeholder="enter image url"></p>
         <p><input type="text" name="picture:answer1" placeholder="enter answer"></p>
         <p>Add other variations of a given answer</p>
-        <div class = "varations">
-            <button class = "addVaration">Add More Varations</button>
-        </div>
-    </div>
-    <div id="matching">
-        <h3>Matching</h3>
-        <p><input type="text" name="question" placeholder="enter question"></p>
-        <p>Enter questions and answers that match:</p>
-
         <%
-            for (int i = 1; i<=4; i++) {
+            for (int i = 2; i<=3; i++) {
                 out.println("<p>");
-                String first = "first-match" + Integer.toString(i);
-                String second = "second-match" + Integer.toString(i);
-                out.println("<input type=\"text\" name="+ first +" placeholder=\"enter first match\">");
-                out.println("<input type=\"text\" name="+ second +" placeholder=\"enter second match\">");
+                String st = "picture:answer"+Integer.toString(i);
+                out.println("<input type=\"text\" name="+ st +" placeholder=\"enter answer\">");
                 out.println("</p>");
             }
         %>

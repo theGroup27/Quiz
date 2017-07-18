@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,18 +73,29 @@ public class ScoringServlet extends javax.servlet.http.HttpServlet {
         }
 
         SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
-        int overall = sE.getCurrentScore();
+        double overall = sE.getCurrentScore();
         overall += thisScore;
 
-        sE.addToOverallScore(overall);
-        d = Double.toString(thisScore);
-
+        sE.setCurrentScore(thisScore);
+        //request.setAttribute("score", thisScore);
         //BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(0),"answers");
 //        rd = request.getRequestDispatcher("temp.jsp?id="+questionID);
 //        rd.forward(request,response);
 //        rd = request.getRequestDispatcher("temp.jsp?id="+request.getParameter(type+":answer0"));
 //        rd.forward(request,response);
-        rd = request.getRequestDispatcher("temp.jsp?id="+d);
+
+
+        List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(sE.getCurrentQuiz());
+        if (questIDs.indexOf(questionID)!=questIDs.size()-1) {
+            questionID=questIDs.get(questIDs.indexOf(questionID)+1);
+            rd = request.getRequestDispatcher("TakeQuestion.jsp?queID="+questionID);
+        } else {
+            //add scores to database
+            Date date = new Date();
+            long elapsed = sE.getElapsedTime(date);
+            //addScores(sE.getOverallScore,elapsed,sE.getCurrentQuiz(),sE.getCurrentUser())
+            rd = request.getRequestDispatcher("temp.jsp?id="+sE.getOverallScore());
+        }
         rd.forward(request,response);
 
     }

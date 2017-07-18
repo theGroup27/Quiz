@@ -24,19 +24,32 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<% SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials"); %>
 </head>
-<body>
+<body onLoad="defaultSettings()">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function(){
+        var main = $(".scoring");
+        var button = $(".show_score");
+        $(button).click(function(e){
+            e.preventDefault();
+            $(main).append("<p>Score:"+ <%=Double.toString(sE.getOverallScore())%>+"</p>");
+        });
+    });
+</script>
 <form action = /ScoringServlet method="post">
     <input name="queID" type="hidden" value=<%=request.getParameter("queID") %>/>
 <%
     int id = Integer.parseInt(request.getParameter("queID"));
     DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-    SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
+
     int quizID = sE.getCurrentQuiz();
     List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quizID);
     BasicQuestion question = (BasicQuestion)db.getStaticDao().getObjectByID(id,"questions");
@@ -53,6 +66,9 @@
 <%-- posts as picture --%>
 <% if (questionType.equals("picture")) {%>
     <p><img src = "<%=text%>"></p>
+<%}%>
+<% if (questionType.equals("fill_in")) {%>
+    <h3><%=text%></h3>
 <%}%>
 
 <%-- Does the same for answers --%>
@@ -86,14 +102,22 @@
 <%      }
     }
 %>
-<p><input type="submit" name="Next" value ="Next Question"></p>
+<p><input type="submit" name="Next" value ="Next"></p>
+        <% Double score = sE.getOverallScore(); %>
+    <p>Score So Far: <%=Double.toString(score)%></p>
 </form>
-    <%if (questIDs.indexOf(id)==questIDs.size()-1) {%>
+
+<%--<div class = "scoring">
+    <button class = "show_score">Show Score So Far</button>
+</div>--%>
+    <%
+        sE.setCurrentScore(0);
+        if (questIDs.indexOf(id)==questIDs.size()-1) {%>
     <p><a href="index.jsp">finish</a></p>
-    <%} else {%>
+    <%}%> <%--else {%>
     <p><a href="TakeQuestion.jsp?queID=<%=questIDs.get(questIDs.indexOf(id)+1)%>">next question</a></p>
     <%}%>
-    </div>
+    </div>--%>
 
 </body>
 </html>
