@@ -32,7 +32,7 @@
                 return pair[1];
             }
         }
-        alert('Query Variable ' + variable + ' not found');
+//        alert('Query Variable ' + variable + ' not found');
     }
     function displayConfirmation() {
         document.mainform.action="/MakeAdminConfirmation.jsp?target-user=" + targetUser;
@@ -45,13 +45,13 @@
         <button id="addButton" type="button" onclick="alert('Request has been sent!'), updateToCancel()">Add Friend</button>
         <button id="cancelButton" type="button" onclick="alert('Request has been canceled!'), updateToAdd()">Cancel Friend Request</button>
     </form>
-    <form action="/MakeAdminConfirmation.jsp" id="ma-conf" style="display: <% if (ursMng.getCurrentUser().getAdminStatus() == true) {
-        out.print("block");
-    }   else {
-        out.print("none");
-    }%>">
-        <input type="button" value="Make Admin" onClick="displayConfirmation(); return false;" />
-    </form>
+    <%--<form action="/MakeAdminConfirmation.jsp" id="ma-conf" style="display: <% if (ursMng.getCurrentUser().getAdminStatus() == true) {--%>
+        <%--out.print("block");--%>
+    <%--}   else {--%>
+        <%--out.print("none");--%>
+    <%--}%>">--%>
+        <%--<input type="button" value="Make Admin" onClick="displayConfirmation(); return false;" />--%>
+    <%--</form>--%>
     <form name="mainform" method="post" ></form>
 
 </body>

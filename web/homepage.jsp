@@ -30,32 +30,31 @@
 
         /* Add a gray background color and some padding to the footer */
         footer {
-            background-color: #B45F04;
+            background-color: #43bd8e;
             padding: 25px;
         }
-
         p {
-            color: #8000FF;
+            color: #214069;
         }
         h3 {
-            color: #8000FF;
+            color: #214069;
         }
         h4 {
-            color: #8000FF;
+            color: #214069;
         }
         body {
-            background-color: #ECCEF5;
+            background-color: #467b8d;
         }
 
 
         .well {
-            background-color: #F2E0F7;
+            background-color:  #ffffff;
         }
         .right{
-            color: #ECCEF5;
+            color: #e1fea4;
         }
         .left{
-            color: #ECCEF5;
+            color: #e1fea4;
         }
 
         .carousel-inner img {
@@ -90,14 +89,14 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="https://placehold.it/1200x400?text=IMAGE">
+            <img src="https://s-media-cache-ak0.pinimg.com/originals/98/eb/b9/98ebb9e2431eda8207956dce67569b50.jpg">
             <div class="carousel-caption">
                 <h3>Random Stuff</h3>
             </div>
         </div>
 
         <div class="item">
-            <img src="https://placehold.it/1200x400?text=IMAGE">
+            <img src="https://s-media-cache-ak0.pinimg.com/originals/98/eb/b9/98ebb9e2431eda8207956dce67569b50.jpg">
             <div class="carousel-caption">
                 <h3>Random Stuff 2</h3>
             </div>
