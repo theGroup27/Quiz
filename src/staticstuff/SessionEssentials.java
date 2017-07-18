@@ -13,6 +13,7 @@ public class SessionEssentials {
     private double currScore = 0;
     private double ovScore = 0;
     private long initial;
+    private double max;
 
     public void setCurrentUser(int id) {
         userID = id;
@@ -35,6 +36,18 @@ public class SessionEssentials {
     }
     public double getOverallScore() {
         return ovScore;
+    }
+    public void resetOverallScore() {
+        ovScore = 0;
+    }
+    public double getMaxScore() {
+        return max;
+    }
+    public void setMaxScore(double score) {
+        max = score;
+    }
+    public void resetTime() {
+        initial = 0;
     }
     public void setBeginning(Date time) {
        initial = time.getTime();

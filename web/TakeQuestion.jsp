@@ -2,6 +2,7 @@
 <%@ page import="question.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="staticstuff.SessionEssentials" %>
+<%@ page import="staticstuff.StaticDAO" %>
 <%--
   Created by IntelliJ IDEA.
   User: mariam
@@ -10,20 +11,31 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
-
-
 <head>
 
-
-    <%
-
-    %>
     <title>Question</title>
     <!--code from https://www.w3schools.com-->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script>
+        $.get("Menu.jsp", function(data){
+            $("#menu-placeholder").replaceWith(data);
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: #ECCEF5;
+        }
+        .well {
+            background-color: #F2E0F7;
+        }
+    </style>
 
 <% SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials"); %>
 </head>
@@ -33,6 +45,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script language="javascript" type="text/javascript">
 
     $(document).ready(function(){
@@ -44,6 +57,8 @@
         });
     });
 </script>
+
+<div id="menu-placeholder"></div>
 <form action = /ScoringServlet method="post">
     <input name="queID" type="hidden" value=<%=request.getParameter("queID") %>/>
 <%
@@ -51,8 +66,9 @@
     DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
 
     int quizID = sE.getCurrentQuiz();
+    Quiz quiz = (Quiz) StaticDAO.getObjectByID(quizID,"quizzes");
     List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quizID);
-    BasicQuestion question = (BasicQuestion)db.getStaticDao().getObjectByID(id,"questions");
+    BasicQuestion question = (BasicQuestion)StaticDAO.getObjectByID(id,"questions");
     String questionType = question.getType();
     String text = question.getQuestion();
     List<Integer> answers = db.getQuizDao().getAnswerIds(id);
@@ -75,7 +91,7 @@
 
 
 <%
-    BasicAnswer answer = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(0),"answers");%>
+    BasicAnswer answer = (BasicAnswer)StaticDAO.getObjectByID(answers.get(0),"answers");%>
     <input name="answer_type" type="hidden" value=<%=answer.getType()%>/>
 <%
     if (answer.getType().equals("text_response")) {
@@ -92,7 +108,7 @@
     if (answer.getType().equals("multiple_choice")) {
         for (int i = 0; i < answers.size(); i++) {
 
-            BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(i),"answers");
+            BasicAnswer ans = (BasicAnswer)StaticDAO.getObjectByID(answers.get(i),"answers");
             String answerText = ans.getAnswer();
             String name = "multiple_choice:checkbox"+i;
 %>
@@ -103,8 +119,10 @@
     }
 %>
 <p><input type="submit" name="Next" value ="Next"></p>
-        <% Double score = sE.getOverallScore(); %>
+    <% if (quiz.isImmediateCorrection()) {
+        Double score = sE.getOverallScore(); %>
     <p>Score So Far: <%=Double.toString(score)%></p>
+    <%}%>
 </form>
 
 <%--<div class = "scoring">
@@ -113,7 +131,7 @@
     <%
         sE.setCurrentScore(0);
         if (questIDs.indexOf(id)==questIDs.size()-1) {%>
-    <p><a href="index.jsp">finish</a></p>
+    <p><a href="homepage.jsp">finish</a></p>
     <%}%> <%--else {%>
     <p><a href="TakeQuestion.jsp?queID=<%=questIDs.get(questIDs.indexOf(id)+1)%>">next question</a></p>
     <%}%>

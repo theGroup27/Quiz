@@ -44,24 +44,17 @@ public class User {
         return userName;
     }
 
-    public void addAchievement(String achievement) {
-        achList.add(achievement);
-    }
-
-    public List<String> getAchievements() {
-        return achList;
-    }
 
     public void addFriend(User contact) {
-        friendList.add(contact);
+
     }
 
     public List<User> getFriends() {
         return friendList;
     }
 
-    public void setAdmin() {
-        isAdmin = true;
+    public void setAdminStatus(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public boolean getAdminStatus() {

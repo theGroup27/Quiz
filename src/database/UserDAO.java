@@ -32,7 +32,7 @@ public class UserDAO {
                 try {
                     ResultSet rs = selectStmt.executeQuery();
                     if (rs.next()) {
-                        return getUserFromRes(rs);
+                        return StaticDAO.getUserFromRes(rs);
                     } else {
                         return null;
                     }
@@ -44,16 +44,6 @@ public class UserDAO {
                 e.printStackTrace();
             }
         return null;
-    }
-
-    private User getUserFromRes(ResultSet res) throws SQLException {
-        int id = res.getInt("id");
-        String name = res.getString("username");
-        String password = res.getString("user_password");
-        String salt = res.getString("salt");
-
-        User user = new User(id,name,password,Hashing.hexToArray(salt));
-        return user;
     }
 
     public void addInputUsers(User usr) {

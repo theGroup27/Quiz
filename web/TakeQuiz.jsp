@@ -3,7 +3,8 @@
 <%@ page import="question.BasicQuestion" %>
 <%@ page import="java.util.List" %>
 <%@ page import="staticstuff.SessionEssentials" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="staticstuff.StaticDAO" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 12/07/17
@@ -11,6 +12,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <% int id = Integer.parseInt(request.getParameter("quizID"));
@@ -31,29 +33,38 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        $.get("Menu.jsp", function(data){
+            $("#menu-placeholder").replaceWith(data);
+        });
+    </script>
 
     <style>
         #main{
             display: none;
         }
-
+         body {
+             background-color: #ECCEF5;
+         }
+        .well {
+            background-color: #F2E0F7;
+        }
     </style>
 
 </head>
 
 
 <body>
+<div id="menu-placeholder"></div>
 <input name="quizID" type="hidden" value=<%=request.getParameter("quizID") %>/>
 
 <form>
     <%
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-        Quiz quiz = (Quiz) db.getStaticDao().getObjectByID(id,"quizzes");
+        Quiz quiz = (Quiz) StaticDAO.getObjectByID(id,"quizzes");
         List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(quiz.getID());
         SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
         sE.setCurrentQuiz(id);

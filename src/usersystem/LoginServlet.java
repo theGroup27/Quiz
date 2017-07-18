@@ -42,7 +42,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
                 sE.setCurrentUser(user.getID());
                 //rd = request.getRequestDispatcher("UserTemp.jsp?id="+nameInput);
                 //request.getSession().setAttribute(UserListener.sessionOwnerUser, user);
-                rd = request.getRequestDispatcher("index.jsp");
+                rd = request.getRequestDispatcher("homepage.jsp");
             } else {
                 rd = request.getRequestDispatcher("Error.jsp");
             }

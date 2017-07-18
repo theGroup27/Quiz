@@ -4,6 +4,7 @@ import database.ConnectionPool;
 import question.BasicAnswer;
 import question.BasicQuestion;
 import question.Quiz;
+import question.Score;
 import usersystem.User;
 
 import java.sql.*;
@@ -13,13 +14,13 @@ import java.sql.*;
  */
 public class StaticDAO {
 
-    private Connection con;
+    private static Connection con;
 
     public StaticDAO(Connection con) {
         this.con = con;
     }
 
-    public synchronized int getLastID(String table) {
+    public synchronized static int getLastID(String table) {
         String qr = "select * from " + table + " order by id desc limit 1";
         try {
             PreparedStatement selectStmt = con.prepareStatement(qr);
@@ -41,7 +42,7 @@ public class StaticDAO {
     }
 
 
-    public Object getObjectByID(int id, String table) {
+    public static Object getObjectByID(int id, String table) {
         String qr = "select * from " + table + " as x where x.id = ?";
         try {
             PreparedStatement selectStmt = con.prepareStatement(qr);
@@ -57,6 +58,8 @@ public class StaticDAO {
                         return getAnswerFromRes(rs);
                     else if (table.equals("users"))
                         return getUserFromRes(rs);
+                    else if (table.equals("quiz_scores"))
+                        return getScoreFromRes(rs);
                 } else {
                     return null;
                 }
@@ -70,18 +73,34 @@ public class StaticDAO {
         return null;
     }
 
+    public static Score getScoreFromRes(ResultSet res) throws SQLException {
+        int id = res.getInt("id");
+        double score = res.getDouble("score");
+        long elapsed = res.getLong("elapsed");
+        int quiz = res.getInt("quiz_id");
+        int user = res.getInt("user_id");
 
-    private User getUserFromRes(ResultSet res) throws SQLException {
+        Score sc = new Score(score,elapsed,quiz,user);
+        sc.setID(id);
+
+        return sc;
+    }
+
+    public static User getUserFromRes(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String name = res.getString("username");
         String password = res.getString("user_password");
         String salt = res.getString("salt");
+        boolean isAdmin = res.getBoolean("is_admin");
 
         User user = new User(id,name,password,Hashing.hexToArray(salt));
+        user.setID(id);
+        user.setAdminStatus(isAdmin);
+
         return user;
     }
 
-    private Quiz getQuizFromRes(ResultSet res) throws SQLException {
+    public static Quiz getQuizFromRes(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String name = res.getString("quiz_name");
         String desc = res.getString("description");
@@ -96,7 +115,7 @@ public class StaticDAO {
         return quiz;
     }
 
-    private BasicQuestion getQuestionFromRes(ResultSet res) throws SQLException {
+    public static BasicQuestion getQuestionFromRes(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String type = res.getString("q_type");
         String text = res.getString("q_text");
@@ -105,7 +124,7 @@ public class StaticDAO {
         return quest;
     }
 
-    private BasicAnswer getAnswerFromRes(ResultSet res) throws SQLException {
+    public static BasicAnswer getAnswerFromRes(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String type = res.getString("a_type");
         String text = res.getString("answer");

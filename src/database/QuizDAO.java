@@ -2,6 +2,7 @@ package database;
 
 import question.*;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,68 +44,21 @@ public class QuizDAO {
         }
     }
 
-//    public Object getObjectByID(int id, String table) {
-//        String qr = "select * from " + table + " as x where x.id = ?";
-//        try {
-//            PreparedStatement selectStmt = con.prepareStatement(qr);
-//            selectStmt.setInt(1,id);
-//            try {
-//                ResultSet rs = selectStmt.executeQuery();
-//                if (rs.next()) {
-//                    if (table.equals("quizzes"))
-//                        return getQuizFromRes(rs);
-//                    else if (table.equals("questions"))
-//                        return getQuestionFromRes(rs);
-//                    else if (table.equals("answers"))
-//                        return getAnswerFromRes(rs);
-//                } else {
-//                    return null;
-//                }
-//            } catch (SQLException ex){
-//                ex.printStackTrace();
-//            }
-//            con.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//
-//    private Quiz getQuizFromRes(ResultSet res) throws SQLException {
-//        int id = res.getInt("id");
-//        String name = res.getString("quiz_name");
-//        String desc = res.getString("description");
-//        String cat = res.getString("category");
-//        boolean isRand = res.getBoolean("is_random");
-//        boolean isOne = res.getBoolean("is_one_page");
-//        boolean isCorr = res.getBoolean("is_correction");
-//        int creatorID = res.getInt("creator_id");
-//        Quiz quiz = new Quiz(name,desc,cat,isRand,isOne,isCorr);
-//        quiz.setID(id);
-//
-//        return quiz;
-//    }
-//
-//    private BasicQuestion getQuestionFromRes(ResultSet res) throws SQLException {
-//        int id = res.getInt("id");
-//        String type = res.getString("q_type");
-//        String text = res.getString("q_text");
-//        BasicQuestion quest = new BasicQuestion(text,type);
-//        quest.setID(id);
-//        return quest;
-//    }
-//
-//    private BasicAnswer getAnswerFromRes(ResultSet res) throws SQLException {
-//        int id = res.getInt("id");
-//        String type = res.getString("a_type");
-//        String text = res.getString("answer");
-//        Boolean isCorrect = res.getBoolean("is_correct");
-//        BasicAnswer answer = new BasicAnswer(text, type, isCorrect);
-//        answer.setID(id);
-//        return answer;
-//    }
-
+    public List<Integer> getQuizzes(String query) {
+        try {
+            PreparedStatement selectStmt = con.prepareStatement(query);
+            try {
+                ResultSet rs = selectStmt.executeQuery();
+                return getChildIDs(rs);
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Integer> getQuestionIdsByQuiz (int quizID) {
         String table = "questions";
@@ -144,33 +98,6 @@ public class QuizDAO {
         return null;
     }
 
-//    public List<Integer> getParentIDs(int parentID, String table) {
-//        String parentCol = "";
-//        //get parentRow instead
-//        if (table.equals("quizzes"))
-//            parentCol = "quiz_id";
-//        else if (table.equals("question_id"))
-//            parentCol = "quiz_id";
-//        String qr = "select * from " + table + " as x where x."+ parentCol +" = ?";
-//        try {
-//            PreparedStatement selectStmt = con.prepareStatement(qr);
-//            selectStmt.setInt(1,parentID);
-//            try {
-//                ResultSet rs = selectStmt.executeQuery();
-//                if (rs.next()) {
-//                    return getChildIDs(rs);
-//                } else {
-//                    return null;
-//                }
-//            } catch (SQLException ex){
-//                ex.printStackTrace();
-//            }
-//            con.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     private List<Integer> getChildIDs(ResultSet res) throws SQLException {
         List<Integer> ids = new ArrayList<>();
@@ -189,10 +116,6 @@ public class QuizDAO {
         }
         return ids;
     }
-
-
-
-
 
 
     public synchronized void addQuestions(BasicQuestion quest, int quizID) {
@@ -235,4 +158,26 @@ public class QuizDAO {
             e.printStackTrace();
         }
     }
+
+    public void addScores(double score,long elapsed, int quizID, int userID) {
+        String qr = "insert into quiz_scores(score,elapsed,quiz_id,user_id) values (?,?,?,?);";
+
+        try {
+            PreparedStatement insertStmt = con.prepareStatement(qr);
+            BigDecimal dec = new BigDecimal(score);
+            insertStmt.setDouble(1,score);
+            insertStmt.setLong(2, elapsed);
+            insertStmt.setInt(3,quizID);
+            insertStmt.setInt(4,userID);
+            try {
+                insertStmt.executeUpdate();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

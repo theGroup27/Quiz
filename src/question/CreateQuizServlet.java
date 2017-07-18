@@ -2,6 +2,7 @@ package question;
 
 import database.DBConnection;
 import staticstuff.SessionEssentials;
+import staticstuff.StaticDAO;
 import usersystem.UserManager;
 
 import javax.servlet.RequestDispatcher;
@@ -29,26 +30,33 @@ public class CreateQuizServlet extends HttpServlet {
         boolean random = request.getParameter("quiz-is-random") != null;
         boolean onePerPage = request.getParameter("one-per-page") != null;
         boolean immediateCorrection = request.getParameter("immediate-correction") != null;
-        boolean allowPractice = request.getParameter("allow-practice-mode") != null;
         Date date = new Date();
+        RequestDispatcher rd;
+        Quiz quiz = null;
+        if (name.length()!=0 && desc.length()!=0) {
+            quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
+        } else {
+            rd = request.getRequestDispatcher("CreateQuiz.jsp");
+            rd.forward(request,response);
+        }
 
-        Quiz quiz = new Quiz(name, desc, cat, random, onePerPage, immediateCorrection);
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
         //current user connecting
         SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
 
-        //
-        //int id = sE.getCurrentUser();
-        //to be edited
-        db.getQuizDao().addQuiz(quiz,1);
-        //lock
-        quiz.setID(db.getStaticDao().getLastID("quizzes"));
-        //unlock
-        sE.setCurrentQuiz(quiz.getID());
-        int count = 1;
-        RequestDispatcher rd;
-        rd = request.getRequestDispatcher("Question.jsp?id="+count);
-        rd.forward(request,response);
+
+        int id = sE.getCurrentUser();
+        if (quiz!=null) {
+            db.getQuizDao().addQuiz(quiz, id);
+            //lock
+            quiz.setID(StaticDAO.getLastID("quizzes"));
+            //unlock
+            sE.setCurrentQuiz(quiz.getID());
+            int count = 1;
+
+            rd = request.getRequestDispatcher("Question.jsp?id=" + count);
+            rd.forward(request, response);
+        }
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)

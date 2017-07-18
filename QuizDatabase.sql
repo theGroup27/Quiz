@@ -5,9 +5,7 @@ id int(11) not null auto_increment,
 username varchar(30) not null,
 user_password varchar(64) not null,
 salt varchar(40) not null,
-achievement enum('amateur','profilic','prodigious','quiz_machine','greatest','practice') default null,
 is_admin boolean default false,
-unique key pass_uniq (user_password),
 unique key user_uniq (username),
 constraint pk primary key (id)
 );
@@ -43,7 +41,6 @@ foreign key (receiver_id)
 
 create table if not exists quizzes (
 id int(11) not null auto_increment,
-url_id varchar (11) default null,
 quiz_name varchar (11) not null,
 description varchar(200) default null,
 category varchar (30) default null,
@@ -82,10 +79,12 @@ foreign key (question_id)
 );
 
 create table if not exists quiz_scores (
-score int(11) default null,
-elapsed_time time default null,
+id int(11) not null auto_increment,
+score decimal(7,3) default null,
+elapsed bigint(8) default null,
 quiz_id int(11) not null,
 user_id int(11) not null,
+constraint pk primary key (id),
 constraint fk_quiz_id
 foreign key (quiz_id)
 	references quizzes(id),

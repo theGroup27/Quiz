@@ -12,6 +12,7 @@ import java.util.Random;
  */
 public class Quiz {
     int id = 0;
+
     private String name;
     private String category;
     private String description;
@@ -52,8 +53,6 @@ public class Quiz {
         return id;
     }
 
-    //creator id
-
     public List <Question> getQuestions () {
         return this.questions;
     }
@@ -82,24 +81,4 @@ public class Quiz {
         return this.isRandom;
     }
 
-
-//    public void addToDatabase() {
-//     //TO-DO
-//
-//
-//        for (Question q : questions) {
-//            for (Answer a: q.getAnswers()) {
-//                String answerText = a.getAnswerText();
-//            }
-//        }
-//    }
-
-/*    public Gson getNextQuestionData() {
-
-        Question q = questions.get(cur);
-        cur++;
-        Gson gson = new Gson();
-        gson.toJson(q);
-        return gson;
-    }*/
 }

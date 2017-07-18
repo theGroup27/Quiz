@@ -1,4 +1,4 @@
-<%--
+<%@ page import="staticstuff.SessionEssentials" %><%--
   Created by IntelliJ IDEA.
   User: jiiok
   Date: 7/17/2017
@@ -17,7 +17,7 @@
             border-radius: 0;
             overflow: hidden;
             position: relative !important;
-            background-color: black;
+            background-color: #380B61;
             height: 100%;
             border: 5px solid;
         <%--style="background-color: #FA58AC; overflow: hidden;"--%>
@@ -39,21 +39,12 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <!-- Home -->
-                    <li class="active" ><a href="#">Home</a></li>
+                    <li class="active" ><a href="homepage.jsp">Home</a></li>
                     <!-- About -->
-                    <li><a href="#">About</a></li>
+                    <%SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");%>
+                    <li><a href="FriendPage.jsp?friendname=<%=sE.getCurrentUser()%>">My Profile</a></li>
                     <!-- Notifications -->
                     <li><a href="#">Notifications</a></li>
-                    <!-- Categories -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Maths</a></li>
-                            <li><a href="#">History</a></li>
-                            <li><a href="#">Misc</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <!-- Search bar -->
                 <form class="navbar-form navbar-right" role="search" action="/SearchUserServlet" method="post">

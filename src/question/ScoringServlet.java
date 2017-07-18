@@ -2,6 +2,7 @@ package question;
 
 import database.DBConnection;
 import staticstuff.SessionEssentials;
+import staticstuff.StaticDAO;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.RequestDispatcher;
@@ -29,16 +30,18 @@ public class ScoringServlet extends javax.servlet.http.HttpServlet {
         int questionID = Integer.parseInt(id);
         String d = "";
         RequestDispatcher rd;
+        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
+        double maxScore = sE.getMaxScore();
 
         DBConnection db = (DBConnection)request.getServletContext().getAttribute("DB Connection");
-        //BasicQuestion quest = (BasicQuestion)db.getStaticDao().getObjectByID(questionID,"questions");
         List<Integer> answers = db.getQuizDao().getAnswerIds(questionID);
         double thisScore = 0;
 
         if (type.equals("text_response")) {
+            maxScore++;
             String answer = request.getParameter(type+":answer0");
             for (Integer ansID : answers) {
-                BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(ansID,"answers");
+                BasicAnswer ans = (BasicAnswer) StaticDAO.getObjectByID(ansID,"answers");
                 if (answer.length()!=0 && ans.getAnswer().equals(answer)) {
                     thisScore ++;
                 }
@@ -46,21 +49,19 @@ public class ScoringServlet extends javax.servlet.http.HttpServlet {
         }
         if (type.equals("multiple_answer")) {
             for (int i =0; i<answers.size(); i++) {
-                BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(i),"answers");
+                BasicAnswer ans = (BasicAnswer)StaticDAO.getObjectByID(answers.get(i),"answers");
                 String answer = request.getParameter(type+":answer"+i);
                 if (answer.length()!=0 && ans.getAnswer().equals(answer))
                     thisScore ++;
-
+                maxScore++;
             }
-                //if unordered
-                    //compare first from answers to all from inputs
-                    //if equals remove both
         }
         if (type.equals("multiple_choice")) {
             double eachScore = 1;
+            maxScore++;
             for (int i =0; i<answers.size(); i++) {
                 String check = request.getParameter(type + ":checkbox" + i);
-                BasicAnswer answer = (BasicAnswer) db.getStaticDao().getObjectByID(answers.get(i), "answers");
+                BasicAnswer answer = (BasicAnswer) StaticDAO.getObjectByID(answers.get(i), "answers");
                 if (check!=null) {
                     if (answer.isCorrectAnswer())
                     thisScore += eachScore;
@@ -71,30 +72,23 @@ public class ScoringServlet extends javax.servlet.http.HttpServlet {
             }
             thisScore = thisScore/(double)answers.size();
         }
-
-        SessionEssentials sE = (SessionEssentials)request.getSession().getAttribute("Session Essentials");
-        double overall = sE.getCurrentScore();
-        overall += thisScore;
-
+        sE.setMaxScore(maxScore);
         sE.setCurrentScore(thisScore);
-        //request.setAttribute("score", thisScore);
-        //BasicAnswer ans = (BasicAnswer)db.getStaticDao().getObjectByID(answers.get(0),"answers");
-//        rd = request.getRequestDispatcher("temp.jsp?id="+questionID);
-//        rd.forward(request,response);
-//        rd = request.getRequestDispatcher("temp.jsp?id="+request.getParameter(type+":answer0"));
-//        rd.forward(request,response);
-
 
         List<Integer> questIDs = db.getQuizDao().getQuestionIdsByQuiz(sE.getCurrentQuiz());
         if (questIDs.indexOf(questionID)!=questIDs.size()-1) {
             questionID=questIDs.get(questIDs.indexOf(questionID)+1);
             rd = request.getRequestDispatcher("TakeQuestion.jsp?queID="+questionID);
         } else {
-            //add scores to database
+            //adds scores to database
             Date date = new Date();
             long elapsed = sE.getElapsedTime(date);
-            //addScores(sE.getOverallScore,elapsed,sE.getCurrentQuiz(),sE.getCurrentUser())
-            rd = request.getRequestDispatcher("temp.jsp?id="+sE.getOverallScore());
+            sE.resetTime();
+            double score = sE.getOverallScore()/sE.getMaxScore();
+            score = 100*score;
+            db.getQuizDao().addScores(score,elapsed,sE.getCurrentQuiz(),sE.getCurrentUser());
+
+            rd = request.getRequestDispatcher("temp.jsp?id="+StaticDAO.getLastID("quiz_scores"));
         }
         rd.forward(request,response);
 
