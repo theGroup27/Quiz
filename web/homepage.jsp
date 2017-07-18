@@ -91,14 +91,14 @@
         <div class="item active">
             <img src="https://s-media-cache-ak0.pinimg.com/originals/98/eb/b9/98ebb9e2431eda8207956dce67569b50.jpg">
             <div class="carousel-caption">
-                <h3>Random Stuff</h3>
+                <h3></h3>
             </div>
         </div>
 
         <div class="item">
             <img src="https://s-media-cache-ak0.pinimg.com/originals/98/eb/b9/98ebb9e2431eda8207956dce67569b50.jpg">
             <div class="carousel-caption">
-                <h3>Random Stuff 2</h3>
+                <%--<h3>Random Stuff 2</h3>--%>
             </div>
         </div>
     </div>
@@ -167,7 +167,7 @@
 </div><br>
 
 <footer class="container-fluid text-center">
-    <p>Footer Text</p>
+    <p>&#169; TheGroup 2017</p>
 </footer>
 
 </body>

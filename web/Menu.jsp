@@ -8,18 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Menu</title>
 
     <style>
 
         .navbar {
             margin-bottom: 0;
-            border-radius: 0;
             overflow: hidden;
             position: relative !important;
-            background-color: #380B61;
+            background-color: #467b8d;
             height: 100%;
-            border: 5px solid;
         <%--style="background-color: #FA58AC; overflow: hidden;"--%>
         }
     </style>
@@ -34,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Logo</a>
+                <%--<a class="navbar-brand" href="#">Logo</a>--%>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
